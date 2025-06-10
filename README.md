@@ -1,69 +1,167 @@
-# React + TypeScript + Vite
+# 🤖 .virtuals.base Registry
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AI Agent Domain Names with Smart Pricing on Base Network
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Visit: [https://virtuals-base-registry.vercel.app](https://virtuals-base-registry.vercel.app)
 
-## Expanding the ESLint configuration
+## 💎 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Smart Pricing Tiers
+- **📝 Regular ($5)**: 3+ characters, common words  
+- **⭐ Premium ($50)**: 2 characters, premium keywords
+- **💎 Ultra ($250)**: Single characters, rare patterns
+- **👑 Legendary (Auction)**: Ultra-rare, auction only
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Multi-Token Payments
+- ⚡ **ETH**: Fast and simple
+- 💵 **USDC**: Stable pricing  
+- 🤖 **$VIRTUAL**: Ecosystem token
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Advanced Features
+- Real-time pricing detection
+- Interactive domain search
+- Wallet connection ready
+- Mobile responsive design
+- SEO optimized
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🏗️ Technical Stack
+
+- **Frontend**: React 18 + Modern CSS
+- **Icons**: Lucide React
+- **Deployment**: Vercel
+- **Blockchain**: Base Network (L2)
+- **Smart Contracts**: Solidity (ready to deploy)
+
+## 🛠️ Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+
+# Build for production
+npm run build
+
+# Deploy to Vercel
+vercel --prod
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎯 Smart Pricing Logic
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Automatic Detection
+- **Length-based**: Shorter = more expensive
+- **Keywords**: AI, bot, NFT, crypto, etc.
+- **Patterns**: Numbers, palindromes, repeating chars
+- **Manual overrides**: Legendary names
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+### Examples
+```javascript
+// Ultra ($250)
+'a', 'x', '1', '123'
+
+// Premium ($50)  
+'ai', 'nft', 'aa', '1234'
+
+// Regular ($5)
+'alice', 'myai', 'helper'
+
+// Legendary (Auction)
+'god', 'king', 'genesis'
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+```env
+REACT_APP_CONTRACT_ADDRESS=0x...
+REACT_APP_CHAIN_ID=8453
+REACT_APP_RPC_URL=https://mainnet.base.org
+```
+
+### Vercel Settings
+- **Framework**: Create React App
+- **Build Command**: `npm run build`
+- **Output Directory**: `build`
+
+## 📊 Business Model
+
+### Revenue Streams
+1. **Registration Fees**: $5-250 per domain
+2. **Auction Events**: Legendary names
+3. **Renewal Fees**: Annual renewals
+4. **Premium Services**: Enterprise features
+
+### Market Opportunity
+- AI agent ecosystem growing rapidly
+- Domain names essential for AI identity
+- Base network adoption increasing
+- Multi-token payment flexibility
+
+## 🛡️ Security Features
+
+- Input validation and sanitization
+- XSS protection headers
+- Secure wallet connections
+- Smart contract verification ready
+
+## 🚀 Deployment Guide
+
+### Quick Deploy to Vercel
+
+1. **Fork this repository**
+2. **Connect to Vercel**: vercel.com/new
+3. **Import from GitHub**
+4. **Deploy**: Automatic deployment
+5. **Custom Domain**: Optional setup
+
+### Manual Deployment
+
+```bash
+# Build the project
+npm run build
+
+# Deploy with Vercel CLI
+npm install -g vercel
+vercel --prod
+```
+
+## 📱 Mobile Support
+
+- Fully responsive design
+- Touch-friendly interface
+- Mobile wallet support
+- Progressive Web App ready
+
+## 🔮 Future Enhancements
+
+- [ ] Smart contract integration
+- [ ] Real wallet connections
+- [ ] Domain marketplace
+- [ ] Auction system
+- [ ] Analytics dashboard
+- [ ] Community features
+
+## 📄 License
+
+MIT License - see LICENSE file for details
+
+## 🤝 Contributing
+
+Contributions welcome! Please read our contributing guidelines.
+
+## 📞 Support
+
+- **Website**: [virtuals-base-registry.vercel.app](https://virtuals-base-registry.vercel.app)
+- **Email**: support@virtualsbase.com
+- **Discord**: [Join our community](https://discord.gg/virtualsbase)
+
+---
+
+**Built with ❤️ for the AI agent ecosystem**
   },
 ])
 ```
