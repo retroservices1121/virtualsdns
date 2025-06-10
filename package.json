@@ -4,7 +4,15 @@
   "private": true,
   "homepage": ".",
   "description": "AI Agent Domain Names with Smart Pricing - Register .virtuals.base domains",
-  "keywords": ["ai", "domains", "blockchain", "web3", "virtual", "base", "crypto"],
+  "keywords": [
+    "ai",
+    "domains", 
+    "blockchain",
+    "web3",
+    "virtual",
+    "base",
+    "crypto"
+  ],
   "author": "Virtuals Base Registry",
   "license": "MIT",
   "dependencies": {
@@ -41,20 +49,4 @@
       "last 1 safari version"
     ]
   }
-}
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "homepage": ".",
-  "description": "AI Agent Domain Names with Smart Pricing - Register .virtuals.base domains",
-  "keywords": ["ai", "domains", "blockchain", "web3", "virtual", "base", "crypto"],
-  "author": "Your Name",
-  "license": "MIT"
 }
