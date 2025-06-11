@@ -1,7 +1,7 @@
 {
-  "short_name": "Virtuals Base",
-  "name": ".virtuals.base Registry",
-  "description": "AI Agent Domain Names with Smart Pricing",
+  "short_name": "VirtualsDNS",
+  "name": "VirtualsDNS.fun - DNS for AI Agents",
+  "description": "Register human-readable .virtuals.base domains for your AI agents on Base network",
   "icons": [
     {
       "src": "favicon.ico",
@@ -11,18 +11,80 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
-      "type": "image/png", 
-      "sizes": "512x512"
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#1e1b4b",
-  "categories": ["business", "productivity", "utilities"],
-  "lang": "en"
+  "theme_color": "#8b5cf6",
+  "background_color": "#1f2937",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["business", "finance", "productivity"],
+  "screenshots": [
+    {
+      "src": "screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshot-narrow.png", 
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Register Domain",
+      "short_name": "Register",
+      "description": "Register a new .virtuals.base domain",
+      "url": "/",
+      "icons": [
+        {
+          "src": "icon-register.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Admin Dashboard",
+      "short_name": "Dashboard", 
+      "description": "View admin analytics dashboard",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "icon-dashboard.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Transfer Domains",
+      "short_name": "Transfer",
+      "description": "Transfer domains to other wallets",
+      "url": "/transfer",
+      "icons": [
+        {
+          "src": "icon-transfer.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
 }
