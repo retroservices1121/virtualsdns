@@ -1,25 +1,45 @@
 # Dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 
 # Testing
 /coverage
 
-# Production
+# Production builds
 /build
+/dist
+/out
 
-# Misc
-.DS_Store
+# Environment variables (CRITICAL - DO NOT COMMIT)
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# Hardhat files
+cache/
+artifacts/
+typechain/
+typechain-types/
+
+# Hardhat Ignition default folder for deployments against a local node
+ignition/deployments/chain-31337/
+
+# Deployment info (contains sensitive data)
+deployment-info.json
+.openzeppelin/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Runtime data
 pids
@@ -27,11 +47,51 @@ pids
 *.seed
 *.pid.lock
 
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
 # Optional npm cache directory
 .npm
 
 # Optional eslint cache
 .eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
 
 # Output of 'npm pack'
 *.tgz
@@ -39,22 +99,186 @@ pids
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
 
-# Vercel
-.vercel
+# Next.js build output
+.next
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# Nuxt.js build / generate output
+.nuxt
+dist
 
-# OS generated files
+# Gatsby files
+.cache/
+public
+
+# Vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary folders
+tmp/
+temp/
+
+# Local History for Visual Studio Code
+.history/
+
+# Windows image file caches
 Thumbs.db
 ehthumbs.db
 
-# Temporary files
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Mac folder attributes
+.DS_Store
+
+# Hardhat network fork cache
+.hardhat_network_fork_cache
+
+# Solidity compiler output
+contracts/artifacts/
+contracts/cache/
+
+# Gas usage reports
+gas-report.txt
+
+# Blockchain development
+ganache-cli.log
+testrpc.log
+
+# Documentation build
+docs/_build/
+
+# Backup files
+*.backup
+*.bak
 *.tmp
-*.temp
+
+# Certificate files (if any)
+*.pem
+*.key
+*.crt
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+
+# Package files
+*.dmg
+*.pkg
+*.deb
+*.rpm
+
+# Configuration override files
+config.override.json
+config.local.json
+
+# Runtime configuration
+.runtime
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+Icon?
+.dropbox
+.dropbox.attr
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# ESLint cache
+.eslintcache
+
+# Prettier cache
+.prettiercache
+
+# Package lock files (choose one)
+# package-lock.json
+# yarn.lock
