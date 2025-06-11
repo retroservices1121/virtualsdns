@@ -4,88 +4,191 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#8b5cf6" />
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Register .virtuals.base domains for your AI agents with smart pricing. $5 Regular • $50 Premium • $250 Ultra • Legendary Auctions. Built on Base network." />
-    <meta name="keywords" content="AI domains, virtual agents, blockchain domains, Web3, Base network, cryptocurrency, NFT domains, .virtuals.base, AI agent names" />
-    <meta name="author" content="Virtuals Base Registry" />
+    <!-- Primary Meta Tags -->
+    <title>VirtualsDNS.fun - DNS for AI Agents</title>
+    <meta name="title" content="VirtualsDNS.fun - DNS for AI Agents" />
+    <meta name="description" content="Register human-readable .virtuals.base domains for your AI agents on Base network. Support for 300+ wallets via WalletConnect." />
+    <meta name="keywords" content="DNS, AI agents, blockchain domains, Base network, WalletConnect, virtual agents, Web3, USDC, ETH" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="author" content="VirtualsDNS Team" />
     
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content=".virtuals.base - AI Agent Domain Names with Smart Pricing" />
-    <meta property="og:description" content="Register premium domain names for your AI agents. Smart pricing: $5 Regular, $50 Premium, $250 Ultra, Legendary Auctions." />
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://virtuals-base-registry.vercel.app" />
-    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
-    <meta property="og:site_name" content="Virtuals Base Registry" />
+    <meta property="og:url" content="https://virtualsdns.fun/" />
+    <meta property="og:title" content="VirtualsDNS.fun - DNS for AI Agents" />
+    <meta property="og:description" content="Register human-readable .virtuals.base domains for your AI agents on Base network. Only $3 per domain!" />
+    <meta property="og:image" content="https://virtualsdns.fun/og-image.png" />
+    <meta property="og:site_name" content="VirtualsDNS.fun" />
     
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content=".virtuals.base - AI Agent Domain Names" />
-    <meta name="twitter:description" content="Register premium domain names for your AI agents with smart pricing on Base network" />
-    <meta name="twitter:image" content="%PUBLIC_URL%/og-image.png" />
-    <meta name="twitter:site" content="@VirtualsBase" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://virtualsdns.fun/" />
+    <meta property="twitter:title" content="VirtualsDNS.fun - DNS for AI Agents" />
+    <meta property="twitter:description" content="Register human-readable .virtuals.base domains for your AI agents on Base network. Only $3 per domain!" />
+    <meta property="twitter:image" content="https://virtualsdns.fun/og-image.png" />
+    <meta property="twitter:creator" content="@virtualsdns_fun" />
     
-    <!-- Favicon -->
+    <!-- Additional Meta Tags -->
+    <meta name="application-name" content="VirtualsDNS.fun" />
+    <meta name="msapplication-TileColor" content="#8b5cf6" />
+    <meta name="msapplication-config" content="browserconfig.xml" />
+    
+    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    
+    <!-- Web App Manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
-    <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://mainnet.base.org" />
     
-    <title>.virtuals.base - AI Agent Domain Names with Smart Pricing</title>
+    <!-- DNS Prefetch for better performance -->
+    <link rel="dns-prefetch" href="//basescan.org" />
+    <link rel="dns-prefetch" href="//cloud.walletconnect.com" />
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              purple: {
+                50: '#faf5ff',
+                100: '#f3e8ff',
+                200: '#e9d5ff',
+                300: '#d8b4fe',
+                400: '#c084fc',
+                500: '#a855f7',
+                600: '#9333ea',
+                700: '#7c3aed',
+                800: '#6b21a8',
+                900: '#581c87'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif']
+            },
+            animation: {
+              'gradient': 'gradient 8s linear infinite',
+              'float': 'float 3s ease-in-out infinite',
+              'glow': 'glow 2s ease-in-out infinite alternate'
+            },
+            keyframes: {
+              gradient: {
+                '0%, 100%': {
+                  'background-size': '200% 200%',
+                  'background-position': 'left center'
+                },
+                '50%': {
+                  'background-size': '200% 200%',
+                  'background-position': 'right center'
+                }
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-10px)' }
+              },
+              glow: {
+                'from': { 'box-shadow': '0 0 20px #8b5cf6' },
+                'to': { 'box-shadow': '0 0 30px #8b5cf6, 0 0 40px #8b5cf6' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": ".virtuals.base Registry",
-      "description": "Register domain names for AI agents with smart pricing on Base network",
-      "url": "https://virtuals-base-registry.vercel.app",
+      "name": "VirtualsDNS.fun",
+      "description": "DNS for AI Agents - Register .virtuals.base domains",
+      "url": "https://virtualsdns.fun",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web",
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Regular Domain",
-          "price": "5.00",
-          "priceCurrency": "USD",
-          "description": "3+ character .virtuals.base domains"
-        },
-        {
-          "@type": "Offer",
-          "name": "Premium Domain", 
-          "price": "50.00",
-          "priceCurrency": "USD",
-          "description": "2-character and premium keyword domains"
-        },
-        {
-          "@type": "Offer",
-          "name": "Ultra Domain",
-          "price": "250.00", 
-          "priceCurrency": "USD",
-          "description": "Single character ultra-rare domains"
-        }
-      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "3.00",
+        "priceCurrency": "USD",
+        "description": "Register .virtuals.base domain"
+      },
       "creator": {
         "@type": "Organization",
-        "name": "Virtuals Base Registry"
+        "name": "VirtualsDNS Team"
       }
     }
     </script>
-    
-    <!-- Additional Meta Tags -->
-    <meta name="robots" content="index, follow" />
-    <meta name="language" content="English" />
-    <meta name="revisit-after" content="7 days" />
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://virtuals-base-registry.vercel.app" />
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- Noscript fallback -->
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>VirtualsDNS.fun requires JavaScript to function properly.</p>
+        <p>Please enable JavaScript in your browser and refresh the page.</p>
+      </div>
+    </noscript>
+    
+    <!-- Main React app container -->
     <div id="root"></div>
+    
+    <!-- Loading indicator -->
+    <div id="loading" style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom right, #581c87, #1e3a8a, #312e81);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      color: white;
+      font-family: Inter, sans-serif;
+    ">
+      <div style="text-align: center;">
+        <div style="
+          width: 40px;
+          height: 40px;
+          border: 4px solid rgba(139, 92, 246, 0.3);
+          border-top: 4px solid #8b5cf6;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin: 0 auto 20px;
+        "></div>
+        <p style="font-size: 18px; margin: 0;">Loading VirtualsDNS.fun...</p>
+      </div>
+    </div>
+    
+    <style>
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+    
+    <script>
+      // Hide loading indicator when app loads
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          const loading = document.getElementById('loading');
+          if (loading) {
+            loading.style.display = 'none';
+          }
+        }, 1000);
+      });
+    </script>
   </body>
 </html>
