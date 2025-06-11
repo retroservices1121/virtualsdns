@@ -1,0 +1,34 @@
+# public/robots.txt - SEO Configuration
+User-agent: *
+Allow: /
+
+# Important pages for SEO
+Allow: /dashboard
+Allow: /transfer
+
+# Sitemap location
+Sitemap: https://virtualsdns.fun/sitemap.xml
+
+# Crawl delay (be nice to servers)
+Crawl-delay: 1
+
+# Block admin-only areas (if any)
+Disallow: /admin/
+Disallow: /api/
+
+# Allow social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Block aggressive crawlers
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
