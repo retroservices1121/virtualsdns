@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "homepage": ".",
-  "description": "AI Agent Domain Names with Smart Pricing - Register .virtuals.base domains",
+  "description": "AI Agent Domain Names with Smart Pricing - Register .virtuals.base domains on Base blockchain",
   "keywords": [
     "ai",
     "domains", 
@@ -11,10 +11,21 @@
     "web3",
     "virtual",
     "base",
-    "crypto"
+    "crypto",
+    "ethereum",
+    "smart-contracts",
+    "nft",
+    "defi"
   ],
   "author": "Virtuals Base Registry",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/retroservices1121/virtualsdns.git"
+  },
+  "bugs": {
+    "url": "https://github.com/retroservices1121/virtualsdns/issues"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -23,30 +34,129 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    
+    "ethers": "^6.8.0",
+    "viem": "^1.19.0",
+    "wagmi": "^1.4.0",
+    "@wagmi/core": "^1.4.0",
+    "@wagmi/connectors": "^3.1.0",
+    
+    "recharts": "^2.8.0",
+    "react-router-dom": "^6.18.0",
+    "react-hot-toast": "^2.4.1",
+    "react-query": "^3.39.3",
+    
+    "classnames": "^2.3.2",
+    "date-fns": "^2.30.0",
+    "lodash": "^4.17.21",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.1.1",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@typechain/hardhat": "^9.1.0",
+    "@typechain/ethers-v6": "^0.5.0",
+    
+    "hardhat": "^2.19.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "hardhat-contract-sizer": "^2.10.0",
+    
+    "@openzeppelin/contracts": "^5.0.0",
+    "@openzeppelin/test-helpers": "^0.5.16",
+    
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "solidity-coverage": "^0.8.5",
+    
+    "dotenv": "^16.3.1",
+    "cross-env": "^7.0.3",
+    "concurrently": "^8.2.2",
+    
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@types/lodash": "^4.14.201",
+    
+    "prettier": "^3.1.0",
+    "prettier-plugin-solidity": "^1.2.0",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    
+    "compile": "hardhat compile",
+    "test:contracts": "hardhat test",
+    "test:gas": "REPORT_GAS=true hardhat test",
+    "coverage": "hardhat coverage",
+    "size": "hardhat size-contracts",
+    "clean": "hardhat clean",
+    
+    "deploy:testnet": "cross-env HARDHAT_NETWORK=base-sepolia hardhat run scripts/deploy.js",
+    "deploy:mainnet": "cross-env HARDHAT_NETWORK=base-mainnet hardhat run scripts/deploy.js",
+    
+    "verify:testnet": "hardhat verify --network base-sepolia",
+    "verify:mainnet": "hardhat verify --network base-mainnet",
+    
+    "dev": "concurrently \"npm run start\" \"hardhat node\"",
+    "dev:fork": "cross-env FORK_BASE=true hardhat node",
+    
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src/ --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "format:sol": "prettier --write \"contracts/**/*.sol\"",
+    
+    "precommit": "npm run lint && npm run format && npm run test:contracts",
+    "prepare": "npm run compile",
+    
+    "analyze": "npm run build && npx serve -s build",
+    "bundle-analyzer": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
+    
+    "export:csv": "node scripts/exportData.js",
+    "backup:db": "node scripts/backupDatabase.js",
+    
+    "postinstall": "npm run compile"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
-    ]
+      "react-app/jest",
+      "prettier"
+    ],
+    "rules": {
+      "no-console": "warn",
+      "no-unused-vars": "warn"
+    }
   },
   "browserslist": {
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not ie <= 11"
     ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
