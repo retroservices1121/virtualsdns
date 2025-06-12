@@ -1,235 +1,473 @@
-// src/utils/helpers.js - Utility Functions
+// src/utils/helpers.js - Enhanced Utility Functions for VirtualsBase
 import { ethers } from 'ethers';
-import { NETWORKS, ERROR_MESSAGES } from './constants';
+import { NETWORKS, ERROR_MESSAGES, DOMAIN_CATEGORIES, PAYMENT_METHODS } from './constants';
 
-// Address formatting
-export const formatAddress = (address) => {
-  if (!address) return '';
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+// ===== ADDRESS & FORMATTING UTILITIES =====
+
+// Enhanced address formatting with validation
+export const formatAddress = (address, length = 6) => {
+  if (!address || !isValidAddress(address)) return '';
+  const start = Math.min(length, address.length / 2 - 2);
+  const end = Math.max(4, address.length / 2 - 2);
+  return `${address.slice(0, start)}...${address.slice(-end)}`;
 };
 
-// Token amount formatting
+// Enhanced token amount formatting with better precision
 export const formatTokenAmount = (amount, decimals = 18, symbol = '') => {
   try {
-    const formatted = ethers.utils.formatUnits(amount, decimals);
+    if (!amount || amount === '0') return `0 ${symbol}`.trim();
+    
+    const formatted = ethers.utils.formatUnits(amount.toString(), decimals);
     const number = parseFloat(formatted);
     
-    if (number < 0.001) return `< 0.001 ${symbol}`.trim();
+    if (number < 0.000001) return `< 0.000001 ${symbol}`.trim();
+    if (number < 0.001) return `${number.toFixed(6)} ${symbol}`.trim();
     if (number < 1) return `${number.toFixed(4)} ${symbol}`.trim();
-    if (number < 1000) return `${number.toFixed(2)} ${symbol}`.trim();
+    if (number < 1000) return `${number.toFixed(3)} ${symbol}`.trim();
+    if (number < 1000000) return `${(number / 1000).toFixed(2)}K ${symbol}`.trim();
     
-    return `${(number / 1000).toFixed(2)}K ${symbol}`.trim();
+    return `${(number / 1000000).toFixed(2)}M ${symbol}`.trim();
   } catch (error) {
-    console.error('Error formatting token amount:', error);
+    console.error('Error formatting token amount:', error, { amount, decimals, symbol });
     return `0 ${symbol}`.trim();
   }
 };
 
-// USD formatting
-export const formatUSD = (amount) => {
+// Enhanced USD formatting with better international support
+export const formatUSD = (amount, options = {}) => {
   const number = parseFloat(amount);
   if (isNaN(number)) return '$0';
   
-  return new Intl.NumberFormat('en-US', {
+  const defaultOptions = {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2
-  }).format(number);
+    maximumFractionDigits: 2,
+    ...options
+  };
+  
+  // Handle very large numbers
+  if (number >= 1000000) {
+    return `$${(number / 1000000).toFixed(1)}M`;
+  } else if (number >= 1000) {
+    return `$${(number / 1000).toFixed(1)}K`;
+  }
+  
+  return new Intl.NumberFormat('en-US', defaultOptions).format(number);
 };
 
-// Large number formatting
-export const formatNumber = (num) => {
+// Enhanced number formatting with more options
+export const formatNumber = (num, options = {}) => {
   const number = parseFloat(num);
   if (isNaN(number)) return '0';
   
-  if (number >= 1000000) {
-    return `${(number / 1000000).toFixed(1)}M`;
-  } else if (number >= 1000) {
-    return `${(number / 1000).toFixed(1)}K`;
+  const { compact = true, decimals = 1 } = options;
+  
+  if (compact) {
+    if (number >= 1000000000) return `${(number / 1000000000).toFixed(decimals)}B`;
+    if (number >= 1000000) return `${(number / 1000000).toFixed(decimals)}M`;
+    if (number >= 1000) return `${(number / 1000).toFixed(decimals)}K`;
   }
-  return number.toLocaleString();
+  
+  return number.toLocaleString('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: decimals
+  });
 };
 
-// Domain name validation
+// ===== DOMAIN VALIDATION & CATEGORIZATION =====
+
+// Enhanced domain validation with more detailed error messages
 export const validateDomainName = (name) => {
-  if (!name) {
+  if (!name || typeof name !== 'string') {
+    return { valid: false, error: 'Domain name is required' };
+  }
+  
+  const trimmedName = name.trim().toLowerCase();
+  
+  if (trimmedName.length < 1) {
     return { valid: false, error: ERROR_MESSAGES.NAME_TOO_SHORT };
   }
   
-  if (name.length < 3) {
-    return { valid: false, error: ERROR_MESSAGES.NAME_TOO_SHORT };
-  }
-  
-  if (name.length > 32) {
+  if (trimmedName.length > 63) { // DNS standard limit
     return { valid: false, error: ERROR_MESSAGES.NAME_TOO_LONG };
   }
   
-  if (!/^[a-z0-9]+$/.test(name)) {
+  // Check for invalid characters (only alphanumeric allowed)
+  if (!/^[a-z0-9]+$/.test(trimmedName)) {
     return { valid: false, error: ERROR_MESSAGES.NAME_INVALID_CHARS };
   }
   
-  return { valid: true };
+  // Check for reserved names
+  const reservedNames = ['www', 'api', 'app', 'admin', 'root', 'mail', 'ftp'];
+  if (reservedNames.includes(trimmedName)) {
+    return { valid: false, error: 'This name is reserved' };
+  }
+  
+  return { valid: true, name: trimmedName };
 };
 
-// Address validation
+// Enhanced domain categorization system
+export const getDomainCategory = (name) => {
+  if (!name) return null;
+  
+  const lowerName = name.toLowerCase();
+  const length = lowerName.length;
+  
+  // Single character domains
+  if (length === 1) {
+    return {
+      tier: 'Ultra',
+      category: DOMAIN_CATEGORIES.SINGLE_CHAR,
+      estimatedValue: 50000,
+      rarity: 'Legendary',
+      description: 'Ultra-rare single character domain'
+    };
+  }
+  
+  // Two character domains
+  if (length === 2) {
+    return {
+      tier: 'Premium',
+      category: DOMAIN_CATEGORIES.TWO_CHAR,
+      estimatedValue: 25000,
+      rarity: 'Epic',
+      description: 'Premium two character domain'
+    };
+  }
+  
+  // AI/ML keywords
+  const aiKeywords = ['ai', 'ml', 'gpt', 'llm', 'bot', 'agent', 'neural', 'model', 'train'];
+  if (aiKeywords.includes(lowerName)) {
+    return {
+      tier: 'Premium',
+      category: DOMAIN_CATEGORIES.AI_KEYWORD,
+      estimatedValue: 15000,
+      rarity: 'Rare',
+      description: 'AI/ML industry keyword'
+    };
+  }
+  
+  // Crypto/Web3 keywords
+  const cryptoKeywords = ['crypto', 'web3', 'defi', 'nft', 'dao', 'token', 'coin', 'stake'];
+  if (cryptoKeywords.includes(lowerName)) {
+    return {
+      tier: 'Premium',
+      category: DOMAIN_CATEGORIES.CRYPTO_KEYWORD,
+      estimatedValue: 10000,
+      rarity: 'Rare',
+      description: 'Crypto/Web3 industry keyword'
+    };
+  }
+  
+  // Three character domains
+  if (length === 3) {
+    return {
+      tier: 'Premium',
+      category: DOMAIN_CATEGORIES.THREE_CHAR,
+      estimatedValue: 5000,
+      rarity: 'Uncommon',
+      description: 'Premium three character domain'
+    };
+  }
+  
+  // Popular/common names
+  const popularNames = ['alice', 'bob', 'charlie', 'david', 'emma', 'frank', 'grace'];
+  if (popularNames.includes(lowerName)) {
+    return {
+      tier: 'Premium',
+      category: DOMAIN_CATEGORIES.POPULAR_NAME,
+      estimatedValue: 2000,
+      rarity: 'Uncommon',
+      description: 'Popular name domain'
+    };
+  }
+  
+  // Four character domains
+  if (length === 4) {
+    return {
+      tier: 'Standard',
+      category: DOMAIN_CATEGORIES.FOUR_CHAR,
+      estimatedValue: 1000,
+      rarity: 'Common',
+      description: 'Standard four character domain'
+    };
+  }
+  
+  // Regular domains
+  return {
+    tier: 'Regular',
+    category: DOMAIN_CATEGORIES.REGULAR,
+    estimatedValue: 100,
+    rarity: 'Common',
+    description: 'Standard domain name'
+  };
+};
+
+// ===== ENHANCED VALIDATION =====
+
+// Enhanced address validation with checksums
 export const isValidAddress = (address) => {
   try {
+    if (!address || typeof address !== 'string') return false;
     return ethers.utils.isAddress(address);
   } catch {
     return false;
   }
 };
 
-// Generate blockchain explorer links
+// Validate private key format
+export const isValidPrivateKey = (key) => {
+  try {
+    if (!key || typeof key !== 'string') return false;
+    if (key.startsWith('0x')) key = key.slice(2);
+    return key.length === 64 && /^[0-9a-fA-F]+$/.test(key);
+  } catch {
+    return false;
+  }
+};
+
+// ===== BLOCKCHAIN UTILITIES =====
+
+// Enhanced transaction link generation
 export const generateTransactionLink = (hash, chainId = 8453) => {
+  if (!hash || !hash.startsWith('0x')) return '#';
   const network = Object.values(NETWORKS).find(n => n.id === chainId);
   return network ? `${network.blockExplorer}/tx/${hash}` : '#';
 };
 
+// Enhanced address link generation
 export const generateAddressLink = (address, chainId = 8453) => {
+  if (!isValidAddress(address)) return '#';
   const network = Object.values(NETWORKS).find(n => n.id === chainId);
   return network ? `${network.blockExplorer}/address/${address}` : '#';
 };
 
-// Clipboard utilities
-export const copyToClipboard = async (text) => {
+// Generate contract link
+export const generateContractLink = (address, chainId = 8453) => {
+  if (!isValidAddress(address)) return '#';
+  const network = Object.values(NETWORKS).find(n => n.id === chainId);
+  return network ? `${network.blockExplorer}/address/${address}#code` : '#';
+};
+
+// ===== ENHANCED UTILITIES =====
+
+// Enhanced clipboard with better error handling
+export const copyToClipboard = async (text, showNotification = true) => {
+  if (!text) return false;
+  
   try {
     await navigator.clipboard.writeText(text);
+    if (showNotification && window.showToast) {
+      window.showToast('Copied to clipboard!', 'success');
+    }
     return true;
   } catch (error) {
     // Fallback for older browsers
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.opacity = '0';
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    
     try {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
       const successful = document.execCommand('copy');
       document.body.removeChild(textArea);
+      
+      if (successful && showNotification && window.showToast) {
+        window.showToast('Copied to clipboard!', 'success');
+      }
       return successful;
     } catch (fallbackError) {
-      document.body.removeChild(textArea);
+      console.error('Failed to copy to clipboard:', fallbackError);
+      if (showNotification && window.showToast) {
+        window.showToast('Failed to copy to clipboard', 'error');
+      }
       return false;
     }
   }
 };
 
-// Debounce function for search inputs
-export const debounce = (func, wait) => {
+// Enhanced debounce with immediate option
+export const debounce = (func, wait, immediate = false) => {
   let timeout;
   return function executedFunction(...args) {
     const later = () => {
-      clearTimeout(timeout);
-      func(...args);
+      timeout = null;
+      if (!immediate) func.apply(this, args);
     };
+    
+    const callNow = immediate && !timeout;
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
+    
+    if (callNow) func.apply(this, args);
   };
 };
 
-// Sleep utility
-export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-// Check if name is premium/valuable
-export const isPremiumName = (name) => {
-  if (!name) return false;
-  
-  // Single characters
-  if (name.length === 1) return true;
-  
-  // Two characters
-  if (name.length === 2) return true;
-  
-  // AI/Tech keywords
-  const aiKeywords = ['ai', 'bot', 'agent', 'gpt', 'llm', 'ml', 'crypto', 'web3', 'defi', 'nft'];
-  if (aiKeywords.includes(name.toLowerCase())) return true;
-  
-  // Popular names
-  const popularNames = ['alice', 'bob', 'charlie', 'david', 'emma'];
-  if (popularNames.includes(name.toLowerCase())) return true;
-  
-  return false;
+// Throttle function for performance-critical operations
+export const throttle = (func, limit) => {
+  let inThrottle;
+  return function executedFunction(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
 };
 
-// Estimate domain value
-export const estimateDomainValue = (name) => {
+// ===== DOMAIN VALUE ESTIMATION =====
+
+// Enhanced domain value estimation with market factors
+export const estimateDomainValue = (name, marketData = {}) => {
   if (!name) return 0;
   
-  if (name.length === 1) return 50000; // Single char: $50k
-  if (name.length === 2) return 25000; // Two char: $25k
+  const category = getDomainCategory(name);
+  if (!category) return 0;
   
-  const aiKeywords = ['ai', 'bot', 'agent', 'gpt'];
-  if (aiKeywords.includes(name.toLowerCase())) return 15000; // AI: $15k
+  let baseValue = category.estimatedValue;
   
-  const cryptoKeywords = ['crypto', 'web3', 'defi', 'nft'];
-  if (cryptoKeywords.includes(name.toLowerCase())) return 10000; // Crypto: $10k
+  // Apply market multipliers
+  const { 
+    marketMultiplier = 1, 
+    demandBoost = 1, 
+    trendingBonus = 0 
+  } = marketData;
   
-  if (name.length === 3) return 5000; // Three char: $5k
-  if (name.length === 4) return 1000; // Four char: $1k
+  // Calculate final value
+  const estimatedValue = Math.floor(
+    baseValue * marketMultiplier * demandBoost + trendingBonus
+  );
   
-  return 100; // Regular name: $100
+  return {
+    baseValue,
+    estimatedValue,
+    category: category.category,
+    tier: category.tier,
+    rarity: category.rarity,
+    factors: {
+      marketMultiplier,
+      demandBoost,
+      trendingBonus
+    }
+  };
 };
 
-// Format time/date
+// ===== TIME & DATE UTILITIES =====
+
+// Enhanced time formatting
 export const formatTimeAgo = (timestamp) => {
   const now = Date.now();
-  const diff = now - timestamp;
+  const diff = now - (typeof timestamp === 'string' ? new Date(timestamp).getTime() : timestamp);
   
-  const minutes = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
   
-  if (minutes < 1) return 'Just now';
+  if (seconds < 60) return 'Just now';
   if (minutes < 60) return `${minutes}m ago`;
   if (hours < 24) return `${hours}h ago`;
-  return `${days}d ago`;
+  if (days < 7) return `${days}d ago`;
+  if (weeks < 4) return `${weeks}w ago`;
+  return `${months}mo ago`;
 };
 
-// Network utilities
+// Format full date
+export const formatDate = (timestamp, options = {}) => {
+  const date = new Date(typeof timestamp === 'string' ? timestamp : timestamp);
+  const defaultOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    ...options
+  };
+  return date.toLocaleDateString('en-US', defaultOptions);
+};
+
+// ===== NETWORK UTILITIES =====
+
+// Enhanced network detection
 export const getNetworkName = (chainId) => {
   const network = Object.values(NETWORKS).find(n => n.id === chainId);
-  return network ? network.name : 'Unknown Network';
+  return network ? network.name : `Unknown Network (${chainId})`;
 };
 
-export const isTestnet = (chainId) => {
-  return chainId === NETWORKS.BASE_SEPOLIA.id;
+// Check if network is supported
+export const isSupportedNetwork = (chainId) => {
+  return Object.values(NETWORKS).some(n => n.id === chainId);
 };
 
-// Error handling
-export const getErrorMessage = (error) => {
-  if (error?.message?.includes('user rejected')) {
+// Get network configuration
+export const getNetworkConfig = (chainId) => {
+  return Object.values(NETWORKS).find(n => n.id === chainId) || null;
+};
+
+// ===== ERROR HANDLING =====
+
+// Enhanced error message extraction
+export const getErrorMessage = (error, context = '') => {
+  if (!error) return ERROR_MESSAGES.UNKNOWN_ERROR;
+  
+  const errorStr = error.toString().toLowerCase();
+  const message = error.message?.toLowerCase() || errorStr;
+  
+  // User rejection
+  if (message.includes('user rejected') || message.includes('user denied')) {
     return 'Transaction cancelled by user';
   }
   
-  if (error?.message?.includes('insufficient funds')) {
+  // Insufficient funds
+  if (message.includes('insufficient funds') || message.includes('insufficient balance')) {
     return ERROR_MESSAGES.INSUFFICIENT_BALANCE;
   }
   
-  if (error?.message?.includes('Name already taken')) {
+  // Already taken
+  if (message.includes('already taken') || message.includes('already registered')) {
     return ERROR_MESSAGES.NAME_TAKEN;
   }
   
-  return error?.message || ERROR_MESSAGES.UNKNOWN_ERROR;
-};
-
-// Local storage utilities (with error handling)
-export const getStoredData = (key, defaultValue = null) => {
-  try {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : defaultValue;
-  } catch (error) {
-    console.error('Error reading from localStorage:', error);
-    return defaultValue;
+  // Network errors
+  if (message.includes('network') || message.includes('connection')) {
+    return 'Network connection error. Please check your internet and try again.';
   }
+  
+  // Gas errors
+  if (message.includes('gas') || message.includes('out of gas')) {
+    return 'Transaction failed due to insufficient gas. Please try again with higher gas.';
+  }
+  
+  // Contract errors
+  if (message.includes('execution reverted')) {
+    return 'Transaction failed. Please check your inputs and try again.';
+  }
+  
+  // Return original message if it's user-friendly, otherwise generic error
+  const originalMessage = error.message || error.toString();
+  if (originalMessage && originalMessage.length < 100 && !originalMessage.includes('0x')) {
+    return originalMessage;
+  }
+  
+  return `${ERROR_MESSAGES.UNKNOWN_ERROR}${context ? ` (${context})` : ''}`;
 };
 
-export const setStoredData = (key, value) => {
+// ===== STORAGE UTILITIES =====
+
+// Enhanced localStorage with expiration
+export const setStoredData = (key, value, expirationHours = null) => {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    const data = {
+      value,
+      timestamp: Date.now(),
+      expiration: expirationHours ? Date.now() + (expirationHours * 60 * 60 * 1000) : null
+    };
+    localStorage.setItem(key, JSON.stringify(data));
     return true;
   } catch (error) {
     console.error('Error writing to localStorage:', error);
@@ -237,18 +475,142 @@ export const setStoredData = (key, value) => {
   }
 };
 
-// URL utilities
-export const buildDomainUrl = (name) => {
-  return `${window.location.origin}/${name}`;
+// Enhanced localStorage retrieval with expiration check
+export const getStoredData = (key, defaultValue = null) => {
+  try {
+    const item = localStorage.getItem(key);
+    if (!item) return defaultValue;
+    
+    const data = JSON.parse(item);
+    
+    // Check if data has expiration and is expired
+    if (data.expiration && Date.now() > data.expiration) {
+      localStorage.removeItem(key);
+      return defaultValue;
+    }
+    
+    // Return value if it's the new format, otherwise return the item directly (backward compatibility)
+    return data.value !== undefined ? data.value : data;
+  } catch (error) {
+    console.error('Error reading from localStorage:', error);
+    return defaultValue;
+  }
 };
 
-export const shareDomain = (name) => {
-  const url = buildDomainUrl(name);
-  const text = `Check out ${name}.virtuals.base on VirtualsDNS.fun!`;
-  
-  if (navigator.share) {
-    navigator.share({ title: text, url });
-  } else {
-    copyToClipboard(url);
+// Clear expired storage items
+export const clearExpiredStorage = () => {
+  try {
+    const keys = Object.keys(localStorage);
+    keys.forEach(key => {
+      getStoredData(key); // This will auto-remove expired items
+    });
+  } catch (error) {
+    console.error('Error clearing expired storage:', error);
   }
+};
+
+// ===== URL & SHARING UTILITIES =====
+
+// Enhanced domain URL building
+export const buildDomainUrl = (name, subdomain = null) => {
+  const base = `${window.location.origin}`;
+  const fullDomain = `${name}.virtuals.base`;
+  return subdomain ? `${base}/${subdomain}/${fullDomain}` : `${base}/domain/${fullDomain}`;
+};
+
+// Enhanced sharing with multiple platforms
+export const shareDomain = async (name, options = {}) => {
+  const { 
+    title = `${name}.virtuals.base - AI Agent Domain`,
+    text = `Check out this AI agent domain: ${name}.virtuals.base`,
+    platform = 'auto'
+  } = options;
+  
+  const url = buildDomainUrl(name);
+  
+  // Use native sharing if available and platform is auto
+  if (platform === 'auto' && navigator.share) {
+    try {
+      await navigator.share({ title, text, url });
+      return true;
+    } catch (error) {
+      // User cancelled or sharing failed
+      return false;
+    }
+  }
+  
+  // Platform-specific sharing
+  const shareUrls = {
+    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+    telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+    whatsapp: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`
+  };
+  
+  if (shareUrls[platform]) {
+    window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+    return true;
+  }
+  
+  // Fallback to clipboard
+  return await copyToClipboard(url, true);
+};
+
+// ===== PAYMENT UTILITIES =====
+
+// Get payment method configuration
+export const getPaymentMethod = (id) => {
+  return Object.values(PAYMENT_METHODS).find(method => method.id === id);
+};
+
+// Format payment amount based on method
+export const formatPaymentAmount = (amount, methodId) => {
+  const method = getPaymentMethod(methodId);
+  if (!method) return '';
+  
+  const formattedAmount = parseFloat(amount).toFixed(method.name === 'USDC' ? 2 : 4);
+  return `${formattedAmount} ${method.name}`;
+};
+
+// ===== PERFORMANCE UTILITIES =====
+
+// Measure and log performance
+export const measurePerformance = (name, fn) => {
+  return async (...args) => {
+    const start = performance.now();
+    try {
+      const result = await fn(...args);
+      const end = performance.now();
+      console.log(`⚡ ${name} took ${(end - start).toFixed(2)}ms`);
+      return result;
+    } catch (error) {
+      const end = performance.now();
+      console.error(`❌ ${name} failed after ${(end - start).toFixed(2)}ms:`, error);
+      throw error;
+    }
+  };
+};
+
+// Create retry function with exponential backoff
+export const createRetryFunction = (fn, maxRetries = 3, baseDelay = 1000) => {
+  return async (...args) => {
+    let lastError;
+    
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        return await fn(...args);
+      } catch (error) {
+        lastError = error;
+        
+        if (attempt === maxRetries) break;
+        
+        const delay = baseDelay * Math.pow(2, attempt);
+        console.warn(`Attempt ${attempt + 1} failed, retrying in ${delay}ms...`, error.message);
+        await sleep(delay);
+      }
+    }
+    
+    throw lastError;
+  };
 };
