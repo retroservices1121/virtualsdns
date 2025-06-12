@@ -1,90 +1,245 @@
 {
-  "short_name": "VirtualsDNS",
-  "name": "VirtualsDNS.fun - DNS for AI Agents",
-  "description": "Register human-readable .virtuals.base domains for your AI agents on Base network",
+  "name": "VirtualsBase - AI Agent Domain Registry",
+  "short_name": "VirtualsBase",
+  "description": "Register premium .virtuals.base domains for your AI agents with smart pricing. Multi-token payments, instant registration on Base blockchain.",
+  "version": "1.0.0",
+  "manifest_version": 3,
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32",
+      "purpose": "any"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180",
+      "purpose": "any"
     },
     {
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "logo192-maskable.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#8b5cf6",
-  "background_color": "#1f2937",
-  "orientation": "portrait-primary",
-  "scope": "/",
-  "lang": "en",
-  "dir": "ltr",
-  "categories": ["business", "finance", "productivity"],
-  "screenshots": [
-    {
-      "src": "screenshot-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
+      "purpose": "any"
     },
     {
-      "src": "screenshot-narrow.png", 
-      "sizes": "720x1280",
+      "src": "logo512-maskable.png",
       "type": "image/png",
-      "form_factor": "narrow"
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "theme_color": "#8b5cf6",
+  "background_color": "#1e1b4b",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "finance", "productivity", "utilities"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "screenshots": [
+    {
+      "src": "screenshot-desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "VirtualsBase main interface showing domain search and pricing"
+    },
+    {
+      "src": "screenshot-desktop-dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Admin dashboard with analytics and domain management"
+    },
+    {
+      "src": "screenshot-mobile-home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile view of domain registration interface"
+    },
+    {
+      "src": "screenshot-mobile-wallet.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile wallet connection and payment selection"
     }
   ],
   "shortcuts": [
     {
       "name": "Register Domain",
       "short_name": "Register",
-      "description": "Register a new .virtuals.base domain",
-      "url": "/",
+      "description": "Search and register a new .virtuals.base domain",
+      "url": "/?action=register",
       "icons": [
         {
           "src": "icon-register.png",
-          "sizes": "96x96"
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Check Availability",
+      "short_name": "Check",
+      "description": "Quickly check if a domain name is available",
+      "url": "/?action=check",
+      "icons": [
+        {
+          "src": "icon-search.png",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
       "name": "Admin Dashboard",
-      "short_name": "Dashboard", 
-      "description": "View admin analytics dashboard",
+      "short_name": "Dashboard",
+      "description": "View admin analytics and manage domains",
       "url": "/dashboard",
       "icons": [
         {
           "src": "icon-dashboard.png",
-          "sizes": "96x96"
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
-      "name": "Transfer Domains",
+      "name": "My Domains",
+      "short_name": "My Domains",
+      "description": "View and manage your registered domains",
+      "url": "/my-domains",
+      "icons": [
+        {
+          "src": "icon-domains.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Transfer Domain",
       "short_name": "Transfer",
-      "description": "Transfer domains to other wallets",
+      "description": "Transfer domains to other wallet addresses",
       "url": "/transfer",
       "icons": [
         {
           "src": "icon-transfer.png",
-          "sizes": "96x96"
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     }
   ],
   "prefer_related_applications": false,
-  "related_applications": [],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://virtualsdns.fun/manifest.json"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+virtualsdns",
+      "url": "/domain/%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/import",
+      "accept": {
+        "text/csv": [".csv"],
+        "application/json": [".json"]
+      },
+      "icons": [
+        {
+          "src": "icon-import.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ],
+      "launch_type": "single-client"
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
   "edge_side_panel": {
     "preferred_width": 400
-  }
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "capture_links": "existing-client-navigate",
+  "permissions": [
+    "clipboard-read",
+    "clipboard-write"
+  ],
+  "features": [
+    "Cross-platform PWA",
+    "Web3 wallet integration", 
+    "Multi-token payments",
+    "Real-time domain availability",
+    "Smart contract interaction",
+    "Admin dashboard analytics",
+    "Mobile-first design",
+    "Offline capability"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icon-*.png", "logo*.png"],
+      "matches": ["https://virtualsdns.fun/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval' https://cdn.tailwindcss.com https://fonts.googleapis.com; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://virtualsdns.fun/*",
+      "https://*.virtualsdns.fun/*"
+    ]
+  },
+  "minimum_chrome_version": "88",
+  "notes": "VirtualsBase PWA for AI agent domain registration with Web3 integration"
 }
