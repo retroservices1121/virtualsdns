@@ -3,41 +3,72 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#8b5cf6" />
+    <meta name="color-scheme" content="dark light" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     
     <!-- Primary Meta Tags -->
-    <title>VirtualsDNS.fun - DNS for AI Agents</title>
-    <meta name="title" content="VirtualsDNS.fun - DNS for AI Agents" />
-    <meta name="description" content="Register human-readable .virtuals.base domains for your AI agents on Base network. Support for 300+ wallets via WalletConnect." />
-    <meta name="keywords" content="DNS, AI agents, blockchain domains, Base network, WalletConnect, virtual agents, Web3, USDC, ETH" />
-    <meta name="robots" content="index, follow" />
+    <title>VirtualsBase - AI Agent Domain Names with Smart Pricing</title>
+    <meta name="title" content="VirtualsBase - AI Agent Domain Names with Smart Pricing" />
+    <meta name="description" content="Register premium .virtuals.base domains for your AI agents on Base blockchain. Smart pricing, multi-token payments (ETH, USDC, VIRTUAL), instant registration. Built for the AI agent economy." />
+    <meta name="keywords" content="AI agents, blockchain domains, Base network, virtual agents, Web3 domains, AI domain names, VIRTUAL token, Base ecosystem, decentralized domains, smart contracts, AI infrastructure" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="language" content="English" />
-    <meta name="author" content="VirtualsDNS Team" />
+    <meta name="author" content="VirtualsBase Team" />
+    <meta name="publisher" content="VirtualsBase" />
+    <meta name="copyright" content="© 2025 VirtualsBase" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://virtualsdns.fun/" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://virtualsdns.fun/" />
-    <meta property="og:title" content="VirtualsDNS.fun - DNS for AI Agents" />
-    <meta property="og:description" content="Register human-readable .virtuals.base domains for your AI agents on Base network. Only $3 per domain!" />
-    <meta property="og:image" content="https://virtualsdns.fun/og-image.png" />
-    <meta property="og:site_name" content="VirtualsDNS.fun" />
+    <meta property="og:title" content="VirtualsBase - AI Agent Domain Names with Smart Pricing" />
+    <meta property="og:description" content="Register premium .virtuals.base domains for your AI agents. Smart pricing from $3, multi-token payments, instant registration on Base blockchain." />
+    <meta property="og:image" content="https://virtualsdns.fun/og-image-1200x630.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="VirtualsBase - AI Agent Domain Registry" />
+    <meta property="og:site_name" content="VirtualsBase" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="fb:app_id" content="your_facebook_app_id" />
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://virtualsdns.fun/" />
-    <meta property="twitter:title" content="VirtualsDNS.fun - DNS for AI Agents" />
-    <meta property="twitter:description" content="Register human-readable .virtuals.base domains for your AI agents on Base network. Only $3 per domain!" />
-    <meta property="twitter:image" content="https://virtualsdns.fun/og-image.png" />
-    <meta property="twitter:creator" content="@virtualsdns_fun" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@virtualsdns_fun" />
+    <meta name="twitter:creator" content="@virtualsdns_fun" />
+    <meta name="twitter:url" content="https://virtualsdns.fun/" />
+    <meta name="twitter:title" content="VirtualsBase - AI Agent Domain Names" />
+    <meta name="twitter:description" content="Register premium .virtuals.base domains for your AI agents. Smart pricing, multi-token payments, instant registration." />
+    <meta name="twitter:image" content="https://virtualsdns.fun/twitter-card-1200x675.png" />
+    <meta name="twitter:image:alt" content="VirtualsBase - AI Agent Domain Registry" />
     
-    <!-- Additional Meta Tags -->
-    <meta name="application-name" content="VirtualsDNS.fun" />
+    <!-- Apple Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="VirtualsBase" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <!-- Microsoft Meta Tags -->
+    <meta name="application-name" content="VirtualsBase" />
     <meta name="msapplication-TileColor" content="#8b5cf6" />
-    <meta name="msapplication-config" content="browserconfig.xml" />
+    <meta name="msapplication-config" content="%PUBLIC_URL%/browserconfig.xml" />
+    <meta name="msapplication-tooltip" content="AI Agent Domain Registry" />
+    <meta name="msapplication-starturl" content="/" />
     
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!-- Favicons and Icons -->
+    <link rel="icon" type="image/x-icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png" />
+    <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#8b5cf6" />
     
     <!-- Web App Manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -46,15 +77,104 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://mainnet.base.org" />
+    <link rel="preconnect" href="https://sepolia.base.org" />
+    <link rel="preconnect" href="https://api.coingecko.com" />
+    <link rel="preconnect" href="https://cloud.walletconnect.com" />
     
     <!-- DNS Prefetch for better performance -->
     <link rel="dns-prefetch" href="//basescan.org" />
-    <link rel="dns-prefetch" href="//cloud.walletconnect.com" />
+    <link rel="dns-prefetch" href="//sepolia.basescan.org" />
+    <link rel="dns-prefetch" href="//cdn.tailwindcss.com" />
+    <link rel="dns-prefetch" href="//www.googletagmanager.com" />
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Resource Hints -->
+    <link rel="prefetch" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="prefetch" href="%PUBLIC_URL%/logo512.png" />
+    
+    <!-- Critical CSS - Inline for performance -->
+    <style>
+      /* Critical loading styles */
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { height: 100%; font-family: Inter, system-ui, sans-serif; }
+      #root { min-height: 100vh; }
+      
+      /* Loading animation */
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      
+      /* Enhanced loading screen */
+      #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1e1b4b 0%, #581c87 35%, #be185d 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        color: white;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      
+      .loading-container {
+        text-align: center;
+        animation: fadeIn 0.5s ease-out;
+      }
+      
+      .loading-spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(139, 92, 246, 0.2);
+        border-top: 4px solid #8b5cf6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 24px;
+      }
+      
+      .loading-text {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0 0 8px;
+        background: linear-gradient(45deg, #8b5cf6, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .loading-subtitle {
+        font-size: 14px;
+        opacity: 0.8;
+        margin: 0;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      
+      /* Backdrop blur for modern browsers */
+      @supports (backdrop-filter: blur(10px)) {
+        #loading {
+          backdrop-filter: blur(10px);
+        }
+      }
+    </style>
+    
+    <!-- Tailwind CSS CDN with optimizations -->
     <script>
-      tailwind.config = {
+      // Tailwind config before loading
+      window.tailwindConfig = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
@@ -68,16 +188,25 @@
                 600: '#9333ea',
                 700: '#7c3aed',
                 800: '#6b21a8',
-                900: '#581c87'
+                900: '#581c87',
+                950: '#3b0764'
+              },
+              blue: {
+                950: '#172554'
               }
             },
             fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif']
+              sans: ['Inter var', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
             },
             animation: {
               'gradient': 'gradient 8s linear infinite',
               'float': 'float 3s ease-in-out infinite',
-              'glow': 'glow 2s ease-in-out infinite alternate'
+              'glow': 'glow 2s ease-in-out infinite alternate',
+              'shimmer': 'shimmer 2s linear infinite',
+              'bounce-slow': 'bounce 3s infinite',
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'slide-up': 'slideUp 0.5s ease-out',
+              'scale-in': 'scaleIn 0.3s ease-out'
             },
             keyframes: {
               gradient: {
@@ -97,98 +226,254 @@
               glow: {
                 'from': { 'box-shadow': '0 0 20px #8b5cf6' },
                 'to': { 'box-shadow': '0 0 30px #8b5cf6, 0 0 40px #8b5cf6' }
+              },
+              shimmer: {
+                '0%': { 'background-position': '-200% 0' },
+                '100%': { 'background-position': '200% 0' }
+              },
+              slideUp: {
+                'from': { opacity: '0', transform: 'translateY(30px)' },
+                'to': { opacity: '1', transform: 'translateY(0)' }
+              },
+              scaleIn: {
+                'from': { opacity: '0', transform: 'scale(0.9)' },
+                'to': { opacity: '1', transform: 'scale(1)' }
               }
+            },
+            backdropBlur: {
+              xs: '2px'
             }
           }
-        }
-      }
+        },
+        plugins: []
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    
+    <!-- Google Fonts with display=swap for performance -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" /></noscript>
+    
+    <!-- Analytics (Google Analytics 4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', {
+        page_title: 'VirtualsBase - AI Agent Domains',
+        custom_map: {'custom_parameter_1': 'domain_registration'}
+      });
     </script>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    
-    <!-- JSON-LD Structured Data -->
+    <!-- Enhanced JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "VirtualsDNS.fun",
-      "description": "DNS for AI Agents - Register .virtuals.base domains",
+      "name": "VirtualsBase",
+      "alternateName": "VirtualsDNS.fun",
+      "description": "AI Agent Domain Names with Smart Pricing - Register .virtuals.base domains",
       "url": "https://virtualsdns.fun",
+      "sameAs": [
+        "https://twitter.com/virtualsdns_fun",
+        "https://github.com/virtualsdns/virtualsdns-fun"
+      ],
       "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Domain Registration",
       "operatingSystem": "Web",
-      "offers": {
-        "@type": "Offer",
-        "price": "3.00",
-        "priceCurrency": "USD",
-        "description": "Register .virtuals.base domain"
-      },
+      "browserRequirements": "Requires JavaScript, Web3 wallet",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Regular Domain Registration",
+          "price": "3.00",
+          "priceCurrency": "USD",
+          "description": "Register .virtuals.base domain names",
+          "availability": "https://schema.org/InStock",
+          "validFrom": "2025-01-01",
+          "priceValidUntil": "2025-12-31"
+        },
+        {
+          "@type": "Offer",
+          "name": "Premium Domain Registration",
+          "price": "50.00",
+          "priceCurrency": "USD",
+          "description": "Premium .virtuals.base domain names",
+          "availability": "https://schema.org/LimitedAvailability"
+        }
+      ],
       "creator": {
         "@type": "Organization",
-        "name": "VirtualsDNS Team"
-      }
+        "name": "VirtualsBase Team",
+        "url": "https://virtualsdns.fun",
+        "logo": "https://virtualsdns.fun/logo512.png"
+      },
+      "featureList": [
+        "Multi-token payments (ETH, USDC, VIRTUAL)",
+        "Instant domain registration",
+        "Smart pricing tiers",
+        "300+ wallet support",
+        "Base blockchain integration"
+      ],
+      "screenshot": "https://virtualsdns.fun/screenshot.png",
+      "softwareVersion": "1.0.0",
+      "releaseNotes": "Initial release with smart pricing and multi-token support"
     }
+    </script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+              console.log('SW registered: ', registration);
+            })
+            .catch(function(registrationError) {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+    
+    <!-- Performance monitoring -->
+    <script>
+      // Web Vitals monitoring
+      window.addEventListener('load', function() {
+        if ('PerformanceObserver' in window) {
+          // Monitor Core Web Vitals
+          new PerformanceObserver((entryList) => {
+            for (const entry of entryList.getEntries()) {
+              if (entry.entryType === 'navigation') {
+                console.log('Navigation timing:', entry);
+              }
+            }
+          }).observe({entryTypes: ['navigation']});
+        }
+      });
     </script>
   </head>
   <body>
-    <!-- Noscript fallback -->
+    <!-- Noscript fallback with enhanced styling -->
     <noscript>
-      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
-        <h1>JavaScript Required</h1>
-        <p>VirtualsDNS.fun requires JavaScript to function properly.</p>
-        <p>Please enable JavaScript in your browser and refresh the page.</p>
+      <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1e1b4b, #581c87, #be185d);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+      ">
+        <div style="
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border-radius: 16px;
+          padding: 40px;
+          max-width: 500px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        ">
+          <h1 style="
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 16px;
+            background: linear-gradient(45deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          ">JavaScript Required</h1>
+          <p style="font-size: 16px; line-height: 1.6; margin: 0 0 20px; opacity: 0.9;">
+            VirtualsBase requires JavaScript to connect with Web3 wallets and interact with the Base blockchain.
+          </p>
+          <p style="font-size: 14px; line-height: 1.5; margin: 0; opacity: 0.7;">
+            Please enable JavaScript in your browser settings and refresh the page to access the AI agent domain registry.
+          </p>
+        </div>
       </div>
     </noscript>
     
     <!-- Main React app container -->
     <div id="root"></div>
     
-    <!-- Loading indicator -->
-    <div id="loading" style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom right, #581c87, #1e3a8a, #312e81);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      color: white;
-      font-family: Inter, sans-serif;
-    ">
-      <div style="text-align: center;">
-        <div style="
-          width: 40px;
-          height: 40px;
-          border: 4px solid rgba(139, 92, 246, 0.3);
-          border-top: 4px solid #8b5cf6;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-          margin: 0 auto 20px;
-        "></div>
-        <p style="font-size: 18px; margin: 0;">Loading VirtualsDNS.fun...</p>
+    <!-- Enhanced loading indicator -->
+    <div id="loading">
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <h1 class="loading-text">VirtualsBase</h1>
+        <p class="loading-subtitle">Loading AI agent domain registry...</p>
       </div>
     </div>
     
-    <style>
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    </style>
-    
+    <!-- Loading management script -->
     <script>
-      // Hide loading indicator when app loads
-      window.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-          const loading = document.getElementById('loading');
-          if (loading) {
-            loading.style.display = 'none';
+      (function() {
+        const loading = document.getElementById('loading');
+        let appLoaded = false;
+        
+        // Hide loading when React app mounts
+        window.hideLoading = function() {
+          if (loading && !appLoaded) {
+            appLoaded = true;
+            loading.style.opacity = '0';
+            loading.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => {
+              loading.style.display = 'none';
+            }, 500);
           }
-        }, 1000);
-      });
+        };
+        
+        // Fallback timeout in case React doesn't load
+        setTimeout(function() {
+          if (!appLoaded) {
+            console.warn('React app took longer than expected to load');
+            window.hideLoading();
+          }
+        }, 8000);
+        
+        // Listen for React app ready event
+        window.addEventListener('react-app-ready', window.hideLoading);
+        
+        // Performance measurement
+        if (window.performance) {
+          window.addEventListener('load', function() {
+            setTimeout(function() {
+              const navigation = performance.getEntriesByType('navigation')[0];
+              if (navigation) {
+                console.log('Page load time:', navigation.loadEventEnd - navigation.fetchStart, 'ms');
+              }
+            }, 0);
+          });
+        }
+      })();
+    </script>
+    
+    <!-- Web3 wallet detection -->
+    <script>
+      // Early wallet detection for better UX
+      window.web3Detected = {
+        ethereum: typeof window.ethereum !== 'undefined',
+        coinbase: typeof window.coinbaseWalletExtension !== 'undefined' || typeof window.ethereum?.isCoinbaseWallet !== 'undefined',
+        metaMask: typeof window.ethereum?.isMetaMask !== 'undefined'
+      };
+      
+      // Log wallet availability for debugging
+      if (window.web3Detected.ethereum) {
+        console.log('Web3 wallet detected:', {
+          isMetaMask: window.web3Detected.metaMask,
+          isCoinbase: window.web3Detected.coinbase,
+          provider: window.ethereum?.constructor?.name
+        });
+      } else {
+        console.log('No Web3 wallet detected');
+      }
     </script>
   </body>
 </html>
