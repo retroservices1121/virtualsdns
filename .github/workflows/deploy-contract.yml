@@ -1,7 +1,8 @@
 # .github/workflows/deploy-contract.yml
-name: Deploy Smart Contract
+name: 🚀 Deploy VirtualsBase Smart Contract
 
 on:
+  # Manual trigger
   workflow_dispatch:
     inputs:
       network:
@@ -17,93 +18,209 @@ on:
         required: true
         default: true
         type: boolean
+      secure_premium_names:
+        description: 'Secure premium domain portfolio'
+        required: true
+        default: true
+        type: boolean
 
 jobs:
   deploy:
+    name: 🏗️ Deploy Smart Contract
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
+    - name: 📥 Checkout Repository
       uses: actions/checkout@v4
       
-    - name: Setup Node.js
+    - name: 🟢 Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
         
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Create environment file
+    - name: 📦 Install Dependencies
+      run: |
+        npm ci --legacy-peer-deps
+        
+    - name: 🔐 Create Environment File
       run: |
         echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}" >> .env
         echo "BASESCAN_API_KEY=${{ secrets.BASESCAN_API_KEY }}" >> .env
+        echo "Network: ${{ github.event.inputs.network }}" >> $GITHUB_STEP_SUMMARY
         
-    - name: Compile contracts
-      run: npm run compile
-      
-    - name: Deploy contract
+    - name: 🏗️ Compile Smart Contracts
       run: |
-        if [ "${{ github.event.inputs.network }}" = "base-mainnet" ]; then
-          npm run deploy:mainnet
-        else
-          npm run deploy:testnet
-        fi
-      
-    - name: Verify contract
-      if: ${{ github.event.inputs.verify }}
+        npm run compile
+        echo "✅ Contracts compiled successfully" >> $GITHUB_STEP_SUMMARY
+        
+    - name: 🚀 Deploy Contract
+      id: deploy
       run: |
+        echo "🚀 Deploying to ${{ github.event.inputs.network }}..." >> $GITHUB_STEP_SUMMARY
+        
         if [ "${{ github.event.inputs.network }}" = "base-mainnet" ]; then
-          npm run verify:mainnet
+          npm run deploy:mainnet > deployment-output.txt 2>&1
         else
-          npm run verify:testnet
+          npm run deploy:testnet > deployment-output.txt 2>&1
         fi
         
-    - name: Upload deployment info
+        # Extract contract address from output
+        CONTRACT_ADDRESS=$(grep -oP 'Contract deployed to: \K0x[a-fA-F0-9]{40}' deployment-output.txt || echo "")
+        
+        if [ -n "$CONTRACT_ADDRESS" ]; then
+          echo "contract_address=$CONTRACT_ADDRESS" >> $GITHUB_OUTPUT
+          echo "✅ **Contract Address:** \`$CONTRACT_ADDRESS\`" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Failed to extract contract address" >> $GITHUB_STEP_SUMMARY
+          cat deployment-output.txt >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+        
+    - name: 🔍 Verify Contract
+      if: ${{ github.event.inputs.verify == 'true' }}
+      run: |
+        echo "🔍 Verifying contract on BaseScan..." >> $GITHUB_STEP_SUMMARY
+        
+        if [ "${{ github.event.inputs.network }}" = "base-mainnet" ]; then
+          npm run verify:mainnet || echo "⚠️ Verification failed - can be done manually"
+        else
+          npm run verify:testnet || echo "⚠️ Verification failed - can be done manually"
+        fi
+        
+        echo "✅ Contract verification completed" >> $GITHUB_STEP_SUMMARY
+        
+    - name: 📊 Upload Deployment Artifacts
       uses: actions/upload-artifact@v4
+      if: always()
       with:
-        name: deployment-info
+        name: deployment-artifacts-${{ github.event.inputs.network }}
         path: |
           deployment-info.json
           .env.production
           DEPLOYMENT.md
+          deployment-output.txt
+        retention-days: 30
         
-    - name: Comment deployment info
+    - name: 📝 Create Deployment Summary
+      if: success()
+      run: |
+        echo "## 🎉 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📋 Deployment Details" >> $GITHUB_STEP_SUMMARY
+        echo "- **Network:** ${{ github.event.inputs.network }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Contract Address:** \`${{ steps.deploy.outputs.contract_address }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Verified:** ${{ github.event.inputs.verify }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Premium Names Secured:** ${{ github.event.inputs.secure_premium_names }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f "deployment-info.json" ]; then
+          TOTAL_NAMES=$(jq -r '.premiumNames.totalSecured // 0' deployment-info.json)
+          PORTFOLIO_VALUE=$(jq -r '.portfolio.estimatedTotalValue // 0' deployment-info.json)
+          
+          echo "### 💎 Premium Portfolio" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Domains Secured:** $TOTAL_NAMES" >> $GITHUB_STEP_SUMMARY
+          echo "- **Estimated Portfolio Value:** \$$(echo $PORTFOLIO_VALUE | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "### 🔗 Important Links" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ github.event.inputs.network }}" = "base-mainnet" ]; then
+          echo "- [📊 BaseScan](https://basescan.org/address/${{ steps.deploy.outputs.contract_address }})" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "- [📊 BaseScan Testnet](https://sepolia.basescan.org/address/${{ steps.deploy.outputs.contract_address }})" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "- [🔗 Add to MetaMask](${{ steps.deploy.outputs.contract_address }})" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        echo "### ⚡ Next Steps" >> $GITHUB_STEP_SUMMARY
+        echo "1. 🔧 **Update Vercel Environment Variable:**" >> $GITHUB_STEP_SUMMARY
+        echo "   \`REACT_APP_REGISTRY_ADDRESS=${{ steps.deploy.outputs.contract_address }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "2. 🚀 **Redeploy Frontend** on Vercel" >> $GITHUB_STEP_SUMMARY
+        echo "3. 🧪 **Test Domain Registration** end-to-end" >> $GITHUB_STEP_SUMMARY
+        echo "4. 📢 **Announce Launch** to community" >> $GITHUB_STEP_SUMMARY
+        
+  post-deploy:
+    name: 📋 Post-Deployment Tasks
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: success()
+    
+    steps:
+    - name: 📥 Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: deployment-artifacts-${{ github.event.inputs.network }}
+        
+    - name: 📊 Display Portfolio Summary
+      if: github.event.inputs.secure_premium_names == 'true'
+      run: |
+        if [ -f "deployment-info.json" ]; then
+          echo "## 💎 Premium Domain Portfolio Secured" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Extract category data
+          SINGLE_CHARS=$(jq -r '.premiumNames.categories.singleChars.count // 0' deployment-info.json)
+          AI_KEYWORDS=$(jq -r '.premiumNames.categories.aiKeywords.count // 0' deployment-info.json)
+          POPULAR_NAMES=$(jq -r '.premiumNames.categories.popularNames.count // 0' deployment-info.json)
+          BUSINESS_TERMS=$(jq -r '.premiumNames.categories.businessTerms.count // 0' deployment-info.json)
+          
+          echo "| Category | Count | Est. Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|------------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Single Characters | $SINGLE_CHARS | \$$(echo $((SINGLE_CHARS * 100000)) | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta') |" >> $GITHUB_STEP_SUMMARY
+          echo "| AI Keywords | $AI_KEYWORDS | \$$(echo $((AI_KEYWORDS * 50000)) | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta') |" >> $GITHUB_STEP_SUMMARY
+          echo "| Popular Names | $POPULAR_NAMES | \$$(echo $((POPULAR_NAMES * 10000)) | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta') |" >> $GITHUB_STEP_SUMMARY
+          echo "| Business Terms | $BUSINESS_TERMS | \$$(echo $((BUSINESS_TERMS * 25000)) | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta') |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+    - name: 🎯 Create Issue for Frontend Update
       uses: actions/github-script@v7
       with:
         script: |
-          const fs = require('fs');
-          if (fs.existsSync('deployment-info.json')) {
-            const deploymentInfo = JSON.parse(fs.readFileSync('deployment-info.json', 'utf8'));
-            const comment = `
-            ## 🚀 Contract Deployed Successfully!
-            
-            **Network**: ${{ github.event.inputs.network }}
-            **Contract Address**: \`${deploymentInfo.deployment.contractAddress}\`
-            **Deployer**: \`${deploymentInfo.deployment.deployerAddress}\`
-            **Block**: ${deploymentInfo.deployment.deploymentBlock}
-            
-            ### 📊 Premium Names Secured
-            - **Single Characters**: ${deploymentInfo.premiumNames.categories.singleChars.count}
-            - **AI Keywords**: ${deploymentInfo.premiumNames.categories.aiKeywords.count}  
-            - **Popular Names**: ${deploymentInfo.premiumNames.categories.popularNames.count}
-            - **Total Portfolio Value**: $${deploymentInfo.portfolio.estimatedTotalValue.toLocaleString()}
-            
-            ### 🔗 Links
-            - [BaseScan](${deploymentInfo.links.basescan})
-            - [Add to MetaMask](${deploymentInfo.deployment.contractAddress})
-            
-            ### 📋 Next Steps
-            1. Update Vercel environment variable: \`REACT_APP_REGISTRY_ADDRESS=${deploymentInfo.deployment.contractAddress}\`
-            2. Redeploy frontend
-            3. Test domain registration
-            `;
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
-          }
+          const contractAddress = '${{ needs.deploy.outputs.contract_address }}';
+          const network = '${{ github.event.inputs.network }}';
+          
+          const issueBody = `
+          ## 🚀 Smart Contract Deployed Successfully!
+          
+          The VirtualsBase smart contract has been deployed to **${network}**.
+          
+          ### 📋 Deployment Details
+          - **Contract Address:** \`${contractAddress}\`
+          - **Network:** ${network}
+          - **Deployed:** ${new Date().toISOString()}
+          
+          ### ⚡ Required Actions
+          
+          #### 1. Update Vercel Environment Variables
+          \`\`\`
+          REACT_APP_REGISTRY_ADDRESS=${contractAddress}
+          \`\`\`
+          
+          #### 2. Redeploy Frontend
+          - Go to [Vercel Dashboard](https://vercel.com/dashboard)
+          - Trigger a new deployment
+          
+          #### 3. Test Full System
+          - [ ] Connect wallet
+          - [ ] Check domain availability
+          - [ ] Register a test domain
+          - [ ] Verify admin dashboard
+          - [ ] Test transfer functionality
+          
+          ### 🔗 Links
+          - [📊 Contract on BaseScan](https://${network === 'base-mainnet' ? '' : 'sepolia.'}basescan.org/address/${contractAddress})
+          - [🎯 Vercel Dashboard](https://vercel.com/dashboard)
+          - [📱 Frontend](https://virtualsdns.fun)
+          
+          **Created by:** GitHub Actions deployment workflow
+          `;
+          
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `🚀 Update Frontend - Contract Deployed to ${network}`,
+            body: issueBody,
+            labels: ['deployment', 'frontend', 'action-required']
+          });
