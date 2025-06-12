@@ -680,6 +680,9 @@ async function main() {
     // Deploy contract
     const registry = await deployContract(addresses, deployer, gasPrice);
     
+    // Output for GitHub Actions (IMPORTANT: Keep this exact format)
+    console.log(`Contract deployed to: ${registry.address}`);
+    
     // Secure premium names
     const { securedNames, totalGasUsed } = await securePremiumNames(registry, deployer, gasPrice);
     
