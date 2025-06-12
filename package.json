@@ -59,7 +59,7 @@
     "typescript": "^5.0.0",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
+"scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -67,8 +67,10 @@
     "compile": "hardhat compile",
     "test:contracts": "hardhat test",
     "test:gas": "REPORT_GAS=true hardhat test",
-    "deploy:testnet": "hardhat run scripts/deploy-integrated-system.js --network base-sepolia",
-    "deploy:mainnet": "hardhat run scripts/deploy-integrated-system.js --network base-mainnet",
+    "deploy:testnet": "hardhat run scripts/simple-deploy.js --network base-sepolia",
+    "deploy:mainnet": "hardhat run scripts/simple-deploy.js --network base-mainnet",
+    "deploy:full:testnet": "hardhat run scripts/deploy-integrated-system.js --network base-sepolia",
+    "deploy:full:mainnet": "hardhat run scripts/deploy-integrated-system.js --network base-mainnet",
     "verify:testnet": "hardhat verify --network base-sepolia",
     "verify:mainnet": "hardhat verify --network base-mainnet",
     "clean": "hardhat clean",
