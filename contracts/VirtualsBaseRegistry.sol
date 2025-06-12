@@ -71,7 +71,7 @@ contract VirtualsBaseRegistry is Ownable, ReentrancyGuard {
     PremiumName[] public premiumNames;
     mapping(string => uint256) public premiumNameIndex;
     
-    constructor(address _usdc, address _virtual) {
+    constructor(address _usdc, address _virtual) Ownable(msg.sender) {
         USDC = IERC20(_usdc);
         VIRTUAL = IERC20(_virtual);
     }
