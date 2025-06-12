@@ -1,126 +1,70 @@
-# .github/workflows/deploy-contract.yml
-name: 🚀 Deploy VirtualsBase Smart Contract
-
-on:
-  workflow_dispatch:
-    inputs:
-      network:
-        description: 'Network to deploy to'
-        required: true
-        default: 'base-sepolia'
-        type: choice
-        options:
-        - base-sepolia
-        - base-mainnet
-      verify:
-        description: 'Verify contract on BaseScan'
-        required: true
-        default: true
-        type: boolean
-      secure_premium_names:
-        description: 'Secure premium domain portfolio'
-        required: true
-        default: true
-        type: boolean
-
-jobs:
-  deploy:
-    name: 🏗️ Deploy Smart Contract
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: 📥 Checkout Repository
-      uses: actions/checkout@v4
-      
-    - name: 🟢 Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        
-    - name: 📦 Install Dependencies
-      run: |
-        npm install --legacy-peer-deps
-        
-    - name: 🔐 Create Environment File
-      run: |
-        echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}" >> .env
-        echo "BASESCAN_API_KEY=${{ secrets.BASESCAN_API_KEY }}" >> .env
-        echo "Network: ${{ github.event.inputs.network }}" >> $GITHUB_STEP_SUMMARY
-        
-    - name: 🏗️ Compile Smart Contracts
-      run: |
-        npm run compile
-        echo "✅ Contracts compiled successfully" >> $GITHUB_STEP_SUMMARY
-        
-    - name: 🚀 Deploy Contract
+- name: 🚀 Deploy Contract
       id: deploy
       run: |
         echo "🚀 Deploying to ${{ github.event.inputs.network }}..." >> $GITHUB_STEP_SUMMARY
         
+        # Show environment for debugging
+        echo "📊 **Environment Info:**" >> $GITHUB_STEP_SUMMARY
+        echo "- Node version: $(node --version)" >> $GITHUB_STEP_SUMMARY
+        echo "- NPM version: $(npm --version)" >> $GITHUB_STEP_SUMMARY
+        echo "- Network: ${{ github.event.inputs.network }}" >> $GITHUB_STEP_SUMMARY
+        
+        # Run deployment and capture output
         if [ "${{ github.event.inputs.network }}" = "base-mainnet" ]; then
+          echo "🔧 Running: npm run deploy:mainnet" >> $GITHUB_STEP_SUMMARY
           npm run deploy:mainnet > deployment-output.txt 2>&1
+          DEPLOY_RESULT=$?
         else
+          echo "🔧 Running: npm run deploy:testnet" >> $GITHUB_STEP_SUMMARY
           npm run deploy:testnet > deployment-output.txt 2>&1
+          DEPLOY_RESULT=$?
         fi
         
-        # Extract contract address from output
-        CONTRACT_ADDRESS=$(grep -oP 'Contract deployed to: \K0x[a-fA-F0-9]{40}' deployment-output.txt || echo "")
+        # Show deployment result
+        echo "📋 **Deployment Command Result:** Exit code $DEPLOY_RESULT" >> $GITHUB_STEP_SUMMARY
         
-        if [ -n "$CONTRACT_ADDRESS" ]; then
-          echo "contract_address=$CONTRACT_ADDRESS" >> $GITHUB_OUTPUT
-          echo "✅ **Contract Address:** \`$CONTRACT_ADDRESS\`" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "❌ Failed to extract contract address" >> $GITHUB_STEP_SUMMARY
-          cat deployment-output.txt >> $GITHUB_STEP_SUMMARY
+        # Always show the deployment output for debugging
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📄 **Full Deployment Output:**" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        cat deployment-output.txt >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        
+        # Check if deployment succeeded
+        if [ $DEPLOY_RESULT -ne 0 ]; then
+          echo "❌ **Deployment command failed with exit code $DEPLOY_RESULT**" >> $GITHUB_STEP_SUMMARY
           exit 1
         fi
         
-    - name: 🔍 Verify Contract
-      if: ${{ github.event.inputs.verify == 'true' }}
-      run: |
-        echo "🔍 Verifying contract on BaseScan..." >> $GITHUB_STEP_SUMMARY
+        # Try multiple patterns to extract contract address
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "🔍 **Address Extraction Attempts:**" >> $GITHUB_STEP_SUMMARY
         
-        if [ "${{ github.event.inputs.network }}" = "base-mainnet" ]; then
-          npm run verify:mainnet || echo "⚠️ Verification failed - can be done manually"
-        else
-          npm run verify:testnet || echo "⚠️ Verification failed - can be done manually"
+        # Pattern 1: Original expected format
+        CONTRACT_ADDRESS=$(grep -oP 'Contract deployed to: \K0x[a-fA-F0-9]{40}' deployment-output.txt || echo "")
+        echo "- Pattern 1 (Contract deployed to:): '$CONTRACT_ADDRESS'" >> $GITHUB_STEP_SUMMARY
+        
+        # Pattern 2: Any Ethereum address
+        if [ -z "$CONTRACT_ADDRESS" ]; then
+          CONTRACT_ADDRESS=$(grep -oE '0x[a-fA-F0-9]{40}' deployment-output.txt | head -1 || echo "")
+          echo "- Pattern 2 (Any 0x address): '$CONTRACT_ADDRESS'" >> $GITHUB_STEP_SUMMARY
         fi
         
-        echo "✅ Contract verification completed" >> $GITHUB_STEP_SUMMARY
-        
-    - name: 📊 Upload Deployment Artifacts
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: deployment-artifacts-${{ github.event.inputs.network }}
-        path: |
-          deployment-info.json
-          .env.production
-          DEPLOYMENT.md
-          deployment-output.txt
-        retention-days: 30
-        
-    - name: 📝 Create Deployment Summary
-      if: success()
-      run: |
-        echo "## 🎉 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📋 Deployment Details" >> $GITHUB_STEP_SUMMARY
-        echo "- **Network:** ${{ github.event.inputs.network }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Contract Address:** \`${{ steps.deploy.outputs.contract_address }}\`" >> $GITHUB_STEP_SUMMARY
-        echo "- **Verified:** ${{ github.event.inputs.verify }}" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        echo "### 🔗 Important Links" >> $GITHUB_STEP_SUMMARY
-        if [ "${{ github.event.inputs.network }}" = "base-mainnet" ]; then
-          echo "- [📊 BaseScan](https://basescan.org/address/${{ steps.deploy.outputs.contract_address }})" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "- [📊 BaseScan Testnet](https://sepolia.basescan.org/address/${{ steps.deploy.outputs.contract_address }})" >> $GITHUB_STEP_SUMMARY
+        # Pattern 3: Contract Address line
+        if [ -z "$CONTRACT_ADDRESS" ]; then
+          CONTRACT_ADDRESS=$(grep -i "contract address" deployment-output.txt | grep -oE '0x[a-fA-F0-9]{40}' | head -1 || echo "")
+          echo "- Pattern 3 (Contract Address): '$CONTRACT_ADDRESS'" >> $GITHUB_STEP_SUMMARY
         fi
-        echo "" >> $GITHUB_STEP_SUMMARY
         
-        echo "### ⚡ Next Steps" >> $GITHUB_STEP_SUMMARY
-        echo "1. 🔧 **Update Vercel Environment Variable:**" >> $GITHUB_STEP_SUMMARY
-        echo "   \`REACT_APP_REGISTRY_ADDRESS=${{ steps.deploy.outputs.contract_address }}\`" >> $GITHUB_STEP_SUMMARY
-        echo "2. 🚀 **Redeploy Frontend** on Vercel" >> $GITHUB_STEP_SUMMARY
-        echo "3. 🧪 **Test Domain Registration** end-to-end" >> $GITHUB_STEP_SUMMARY
+        # Final check
+        if [ -n "$CONTRACT_ADDRESS" ]; then
+          echo "contract_address=$CONTRACT_ADDRESS" >> $GITHUB_OUTPUT
+          echo "✅ **Contract Successfully Deployed:** \`$CONTRACT_ADDRESS\`" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Failed to extract contract address from any pattern**" >> $GITHUB_STEP_SUMMARY
+          echo "🔍 **Available lines containing '0x':**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          grep -i "0x" deployment-output.txt || echo "No lines containing '0x' found"
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
