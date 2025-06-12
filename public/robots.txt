@@ -1,34 +1,257 @@
-# public/robots.txt - SEO Configuration
+# robots.txt - VirtualsBase AI Agent Domain Registry
+# Last updated: 2025-06-11
+# Domain: https://virtualsdns.fun
+
+# ===== DEFAULT CRAWL RULES =====
 User-agent: *
 Allow: /
 
-# Important pages for SEO
+# Allow important public pages
 Allow: /dashboard
 Allow: /transfer
+Allow: /domain/
+Allow: /docs/
+Allow: /help/
+Allow: /terms/
+Allow: /privacy/
+Allow: /blog/
 
-# Sitemap location
-Sitemap: https://virtualsdns.fun/sitemap.xml
-
-# Crawl delay (be nice to servers)
-Crawl-delay: 1
-
-# Block admin-only areas (if any)
+# Block sensitive areas
 Disallow: /admin/
 Disallow: /api/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /webpack/
+Disallow: *.json$
+Disallow: *.js$
+Disallow: *.css$
+Disallow: *.map$
 
-# Allow social media crawlers
-User-agent: facebookexternalhit
+# Block dynamic/temporary pages
+Disallow: /search?
+Disallow: /*?utm_*
+Disallow: /*?ref=*
+Disallow: /*?fbclid=*
+Disallow: /*?gclid=*
+Disallow: /*?src=*
+Disallow: /*?campaign=*
+
+# Block wallet-specific pages from indexing
+Disallow: /wallet/
+Disallow: /connect/
+Disallow: /transaction/
+
+# ===== SEARCH ENGINE SPECIFIC RULES =====
+
+# Google
+User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+# ===== SOCIAL MEDIA CRAWLERS =====
+
+# Facebook
+User-agent: facebookexternalhit/1.1
+Allow: /
+Crawl-delay: 0
+
+User-agent: FacebookBot
+Allow: /
+Crawl-delay: 0
+
+# Twitter/X
 User-agent: Twitterbot
 Allow: /
+Crawl-delay: 0
 
+# LinkedIn
 User-agent: LinkedInBot
 Allow: /
+Crawl-delay: 1
 
-# Block aggressive crawlers
+# Discord
+User-agent: discordbot
+Allow: /
+Crawl-delay: 1
+
+# Telegram
+User-agent: TelegramBot
+Allow: /
+Crawl-delay: 1
+
+# ===== SEO & ANALYTICS TOOLS =====
+
+# Google PageSpeed Insights
+User-agent: Google-PageSpeed
+Allow: /
+Crawl-delay: 0
+
+# Google Lighthouse
+User-agent: Chrome-Lighthouse
+Allow: /
+Crawl-delay: 0
+
+# Semrush
+User-agent: SemrushBot
+Allow: /
+Crawl-delay: 5
+
+# Ahrefs (be more restrictive)
 User-agent: AhrefsBot
+Allow: /
+Crawl-delay: 10
+Request-rate: 1/10s
+
+# Moz
+User-agent: rogerbot
+Allow: /
+Crawl-delay: 5
+
+# ===== AGGRESSIVE CRAWLERS (LIMITED ACCESS) =====
+
+# Generic aggressive bots
+User-agent: MJ12bot
+Crawl-delay: 30
+Request-rate: 1/30s
+
+User-agent: SeznamBot
 Crawl-delay: 10
 
-User-agent: MJ12bot
+User-agent: DotBot
 Crawl-delay: 10
+
+# AI Training bots (Web3 content should be accessible)
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: ChatGPT-User
+Allow: /
+Crawl-delay: 2
+
+User-agent: CCBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: anthropic-ai
+Allow: /
+Crawl-delay: 1
+
+User-agent: Claude-Web
+Allow: /
+Crawl-delay: 1
+
+# ===== BLOCKCHAIN & WEB3 SPECIFIC =====
+
+# Block wallet security scanners
+User-agent: *security*
+Disallow: /
+
+User-agent: *phish*
+Disallow: /
+
+# Allow legitimate blockchain indexers
+User-agent: *blockchain*
+Allow: /
+Crawl-delay: 5
+
+User-agent: *defi*
+Allow: /
+Crawl-delay: 5
+
+# ===== SITEMAPS =====
+
+# Main sitemap (auto-generated)
+Sitemap: https://virtualsdns.fun/sitemap.xml
+
+# Domain-specific sitemaps
+Sitemap: https://virtualsdns.fun/sitemap-domains.xml
+Sitemap: https://virtualsdns.fun/sitemap-pages.xml
+Sitemap: https://virtualsdns.fun/sitemap-blog.xml
+
+# ===== ADDITIONAL DIRECTIVES =====
+
+# Global crawl delay for politeness
+Crawl-delay: 1
+
+# Request rate for aggressive crawlers
+Request-rate: 1/1s
+
+# Host directive (if needed for canonical domain)
+Host: virtualsdns.fun
+
+# Clean URLs preference
+Clean-param: utm_source&utm_medium&utm_campaign&fbclid&gclid&ref&src&campaign
+
+# ===== WEB3 & BLOCKCHAIN SPECIFIC RULES =====
+
+# Allow Web3 documentation crawlers
+User-agent: Web3Bot
+Allow: /
+Crawl-delay: 2
+
+# Block suspicious DeFi-related crawlers
+User-agent: *scam*
+Disallow: /
+
+User-agent: *hack*
+Disallow: /
+
+User-agent: *exploit*
+Disallow: /
+
+# ===== PERFORMANCE OPTIMIZATION =====
+
+# Block resource-intensive paths during peak hours
+# (This would be implemented via server config, but documenting here)
+# Disallow: /heavy-computation/
+
+# Block old versions if using versioned URLs
+Disallow: /v1/
+Disallow: /old/
+Disallow: /legacy/
+
+# ===== MONITORING & ANALYTICS =====
+
+# Allow monitoring services
+User-agent: UptimeRobot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Pingdom
+Allow: /
+Crawl-delay: 0
+
+User-agent: GTmetrix
+Allow: /
+Crawl-delay: 0
+
+# ===== NOTES =====
+# This robots.txt is optimized for:
+# - VirtualsBase AI agent domain registry
+# - Web3/blockchain SEO requirements  
+# - Social media sharing optimization
+# - Performance and security considerations
+# - AI training data inclusion (for technology advancement)
+#
+# For questions about crawling permissions:
+# Contact: admin@virtualsdns.fun
+#
+# Last reviewed: 2025-06-11
+# Next review: 2025-09-11
