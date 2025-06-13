@@ -1,4 +1,4 @@
-/* Your existing CSS is excellent - adding enhancements below */
+/* Updated with Brand Colors: Purple #A347FF, Neon Blue #00D4FF, Yellow #FFD300, Black #000000 */
 
 /* Header Enhancements */
 .header-badges {
@@ -10,9 +10,9 @@
 }
 
 .badge {
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  color: #93c5fd;
+  background: rgba(163, 71, 255, 0.15);
+  border: 1px solid rgba(163, 71, 255, 0.3);
+  color: #00D4FF;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
@@ -28,16 +28,16 @@
   gap: 0.5rem;
   margin: 1rem 0;
   font-size: 0.875rem;
-  color: #c4b5fd;
+  color: #A347FF;
 }
 
 .status-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #10b981;
+  background: #00D4FF;
   animation: pulse 2s infinite;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
 }
 
 /* Availability Status */
@@ -54,7 +54,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #4ade80;
+  color: #00D4FF;
   font-weight: 500;
 }
 
@@ -70,7 +70,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #fbbf24;
+  color: #FFD300;
   font-weight: 500;
 }
 
@@ -78,20 +78,20 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  color: #60a5fa;
+  color: #00D4FF;
   text-decoration: none;
   font-size: 0.75rem;
   margin-left: auto;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
-  background: rgba(96, 165, 250, 0.1);
-  border: 1px solid rgba(96, 165, 250, 0.2);
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.2);
   transition: all 0.3s ease;
 }
 
 .view-link:hover {
-  background: rgba(96, 165, 250, 0.2);
-  color: #93c5fd;
+  background: rgba(0, 212, 255, 0.2);
+  color: #FFD300;
   transform: scale(1.05);
 }
 
@@ -111,7 +111,7 @@
   width: 2rem;
   height: 2rem;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  border-top: 2px solid #3b82f6;
+  border-top: 2px solid #A347FF;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -120,7 +120,7 @@
   width: 1rem;
   height: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: 1px solid #fff;
+  border-top: 1px solid #00D4FF;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-right: 0.5rem;
@@ -128,9 +128,9 @@
 
 /* Copy Buttons */
 .copy-button, .copy-button-inline {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #c4b5fd;
+  background: rgba(163, 71, 255, 0.1);
+  border: 1px solid rgba(163, 71, 255, 0.2);
+  color: #A347FF;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.375rem;
@@ -140,10 +140,10 @@
 }
 
 .copy-button:hover, .copy-button-inline:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(163, 71, 255, 0.2);
+  color: #00D4FF;
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(163, 71, 255, 0.3);
 }
 
 .copy-button-inline {
@@ -176,8 +176,8 @@
 
 .domain-input:focus {
   outline: none;
-  border-color: rgba(59, 130, 246, 0.5);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  border-color: rgba(163, 71, 255, 0.5);
+  box-shadow: 0 0 20px rgba(163, 71, 255, 0.3);
   background-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -191,7 +191,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
   border: none;
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+  background: linear-gradient(45deg, #A347FF, #00D4FF, #FFD300);
   background-size: 300% 300%;
   color: white;
   position: relative;
@@ -205,7 +205,7 @@
 
 .register-button:hover:not(.disabled) {
   transform: scale(1.02);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 25px rgba(163, 71, 255, 0.4);
 }
 
 .register-button.disabled {
@@ -251,7 +251,7 @@
 
 .tier-card:hover {
   transform: scale(1.05) translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(163, 71, 255, 0.3);
 }
 
 .tier-card:before {
@@ -261,7 +261,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, white, transparent);
+  background: linear-gradient(90deg, #A347FF, #00D4FF, #FFD300);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -285,16 +285,16 @@
 }
 
 .example-item:hover {
-  background-color: rgba(255, 255, 255, 0.15) !important;
+  background-color: rgba(163, 71, 255, 0.15) !important;
   transform: translateX(5px);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(163, 71, 255, 0.3);
 }
 
 /* Enhanced Legendary Notice */
 .legendary-notice {
   margin-top: 1rem;
-  background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(251, 191, 36, 0.2));
-  border: 1px solid rgba(234, 179, 8, 0.4);
+  background: linear-gradient(135deg, rgba(255, 211, 0, 0.2), rgba(255, 211, 0, 0.2));
+  border: 1px solid rgba(255, 211, 0, 0.4);
   border-radius: 0.75rem;
   padding: 1.5rem;
   backdrop-filter: blur(8px);
@@ -313,7 +313,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 215, 0, 0.1),
+    rgba(255, 211, 0, 0.1),
     transparent
   );
   animation: shimmer 2s infinite;
@@ -339,14 +339,14 @@
 }
 
 .footer-links a {
-  color: #c4b5fd;
+  color: #A347FF;
   text-decoration: none;
   font-size: 0.875rem;
   transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-  color: white;
+  color: #00D4FF;
 }
 
 .footer-text {
@@ -388,7 +388,7 @@
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(163, 71, 255, 0.15);
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -404,7 +404,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(163, 71, 255, 0.3), transparent);
 }
 
 /* Enhanced Pricing Result */
@@ -422,7 +422,7 @@
 
 .pricing-result:hover {
   transform: scale(1.02);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 30px rgba(163, 71, 255, 0.3);
 }
 
 /* Enhanced Price Options */
@@ -440,15 +440,15 @@
 }
 
 .price-option:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(163, 71, 255, 0.1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(163, 71, 255, 0.2);
 }
 
 .price-option.selected {
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  background-color: rgba(163, 71, 255, 0.2);
+  border: 2px solid rgba(163, 71, 255, 0.5);
+  box-shadow: 0 0 20px rgba(163, 71, 255, 0.2);
 }
 
 .price-option.selected:before {
@@ -456,7 +456,7 @@
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
-  color: #4ade80;
+  color: #00D4FF;
   font-weight: bold;
   font-size: 0.75rem;
 }
@@ -553,4 +553,28 @@
   .wallet-button {
     display: none;
   }
+}
+
+/* Additional Brand Color Utilities */
+.text-brand-purple { color: #A347FF; }
+.text-brand-blue { color: #00D4FF; }
+.text-brand-yellow { color: #FFD300; }
+
+.bg-brand-purple { background-color: #A347FF; }
+.bg-brand-blue { background-color: #00D4FF; }
+.bg-brand-yellow { background-color: #FFD300; }
+
+.border-brand-purple { border-color: #A347FF; }
+.border-brand-blue { border-color: #00D4FF; }
+.border-brand-yellow { border-color: #FFD300; }
+
+.gradient-brand {
+  background: linear-gradient(45deg, #A347FF, #00D4FF, #FFD300);
+}
+
+.gradient-brand-text {
+  background: linear-gradient(45deg, #A347FF, #00D4FF, #FFD300);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
