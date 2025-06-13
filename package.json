@@ -96,7 +96,7 @@
     ]
   },
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "overrides": {
     "@nomicfoundation/hardhat-verify": "^2.0.11"
