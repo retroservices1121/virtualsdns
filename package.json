@@ -18,16 +18,17 @@
   "dependencies": {
     "@tanstack/react-query": "^5.0.0",
     "ethers": "^6.13.4",
-    "react-scripts": "5.0.1",
     "lucide-react": "^0.263.1",
     "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.26.2",
+    "react-scripts": "5.0.1",
     "recharts": "^2.12.7",
     "viem": "^2.21.45",
-    "wagmi": "^2.12.26"
+    "wagmi": "^2.12.26",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
@@ -35,7 +36,7 @@
     "@nomicfoundation/hardhat-ignition": "^0.15.11",
     "@nomicfoundation/hardhat-ignition-ethers": "^0.15.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.11",
     "@nomicfoundation/ignition-core": "^0.15.11",
     "@openzeppelin/contracts": "^5.1.0",
@@ -49,17 +50,16 @@
     "chai": "^4.2.0",
     "dotenv": "^16.4.5",
     "hardhat": "^2.22.17",
-    "hardhat-gas-reporter": "^2.2.1",
+    "hardhat-gas-reporter": "^1.0.10",
     "prettier": "^3.3.3",
     "prettier-plugin-solidity": "^1.4.1",
     "solhint": "^5.0.3",
     "solidity-coverage": "^0.8.13",
     "ts-node": "^10.9.0",
     "typechain": "^8.3.0",
-    "typescript": "^5.0.0",
-    "web-vitals": "^2.1.4"
+    "typescript": "^5.0.0"
   },
-"scripts": {
+  "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -100,7 +100,7 @@
     "npm": ">=8.0.0"
   },
   "overrides": {
-    "@nomicfoundation/hardhat-verify": "^2.0.11"
+    "@nomicfoundation/hardhat-verify": "^2.0.11",
     "ajv": "^8.12.0",
     "ajv-keywords": "^5.1.0",
     "schema-utils": "^4.0.0",
