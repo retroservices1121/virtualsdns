@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { ethers } from 'ethers';
-import { Search, User, Settings, Gift, Wallet, AlertCircle, CheckCircle } from 'lucide-react';
+import { Search, User, Settings, Gift, Wallet, AlertCircle, CheckCircle, Home, ArrowLeft } from 'lucide-react';
+import VirtualsBaseLanding from './components/VirtualsBaseLanding';
 
+// Your existing VirtualsBaseApp component (keeping all your logic)
 const VirtualsBaseApp = () => {
   const [searchName, setSearchName] = useState('');
   const [registerName, setRegisterName] = useState('');
@@ -266,6 +269,20 @@ const VirtualsBaseApp = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+      {/* Navigation Bar */}
+      <nav className="bg-black/20 backdrop-blur-lg border-b border-white/10">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-2 text-white hover:text-purple-300 transition-colors">
+              <ArrowLeft className="w-5 h-5" />
+              <span>Back to Home</span>
+            </Link>
+            <div className="text-white font-bold text-xl">🤖 .virtuals.base App</div>
+            <div className="w-24"></div> {/* Spacer for centering */}
+          </div>
+        </div>
+      </nav>
+
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -273,10 +290,10 @@ const VirtualsBaseApp = () => {
             🤖 .virtuals.base
           </h1>
           <p className="text-xl text-purple-200">
-            Your AI Agent Identity on Base Network
+            Your VIRTUAL Identity on Base Network
           </p>
           <p className="text-sm text-purple-300 mt-2">
-            Like having a nickname for your robot friend's wallet address!
+            Like having a nickname for your wallet address!
           </p>
           
           {/* Connection Status */}
@@ -312,7 +329,7 @@ const VirtualsBaseApp = () => {
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
             <div className="flex items-center gap-3 mb-6">
               <Search className="text-purple-300" />
-              <h2 className="text-2xl font-bold text-white">Find an AI Agent</h2>
+              <h2 className="text-2xl font-bold text-white">Find a Name</h2>
             </div>
             
             <div className="space-y-4">
@@ -365,25 +382,25 @@ const VirtualsBaseApp = () => {
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
             <div className="flex items-center gap-3 mb-6">
               <Gift className="text-green-300" />
-              <h2 className="text-2xl font-bold text-white">Register Your AI</h2>
+              <h2 className="text-2xl font-bold text-white">Register Your Name</h2>
             </div>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-purple-200 mb-2">Choose your AI agent name:</label>
+                <label className="block text-purple-200 mb-2">Choose your name:</label>
                 <div className="relative">
                   <input
                     type="text"
                     value={registerName}
                     onChange={(e) => setRegisterName(e.target.value.toLowerCase())}
                     onKeyPress={(e) => handleKeyPress(e, handleRegister)}
-                    placeholder="myai"
+                    placeholder="myname"
                     className="w-full p-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder-purple-300 pr-32"
                   />
                   <span className="absolute right-3 top-3 text-purple-300">.virtuals.base</span>
                 </div>
                 <p className="text-sm text-purple-300 mt-1">
-                  🏷️ Like getting a name tag for your AI friend!
+                  🏷️ Like getting a name tag!
                 </p>
               </div>
 
@@ -454,7 +471,7 @@ const VirtualsBaseApp = () => {
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <div className="flex items-center gap-3 mb-6">
                 <User className="text-yellow-300" />
-                <h2 className="text-2xl font-bold text-white">Your AI Agents</h2>
+                <h2 className="text-2xl font-bold text-white">Your Names</h2>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -505,7 +522,7 @@ const VirtualsBaseApp = () => {
                 <div className="text-4xl mb-3">📝</div>
                 <h3 className="text-white font-semibold mb-2">1. Register</h3>
                 <p className="text-purple-300 text-sm">
-                  Pick a nickname for your AI agent, like getting a name tag!
+                  Pick a nickname for your wallet, like getting a name tag!
                 </p>
               </div>
               
@@ -551,4 +568,24 @@ const VirtualsBaseApp = () => {
   );
 };
 
-export default VirtualsBaseApp;
+// Main App component with Router
+const App = () => {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Landing page at root */}
+          <Route path="/" element={<VirtualsBaseLanding />} />
+          
+          {/* Your existing app at /app */}
+          <Route path="/app" element={<VirtualsBaseApp />} />
+          
+          {/* You can add more routes */}
+          <Route path="/dashboard" element={<VirtualsBaseApp />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
+
+export default App;
