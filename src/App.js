@@ -1,3 +1,4 @@
+import { ethers } from 'ethers';
 import React, { useState, useEffect } from 'react';
 import { Search, Crown, Star, Gem, Sparkles, CheckCircle, Wallet, ExternalLink, Copy, AlertCircle } from 'lucide-react';
 import './App.css';
