@@ -535,7 +535,3 @@ export const useDashboardData = (refreshInterval = 30000) => {
 
 export default DashboardAPI;
 
-  return { data, loading, error, refetch: fetchData, api };
-};
-
-export default DashboardAPI;
