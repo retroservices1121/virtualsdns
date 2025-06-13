@@ -474,4 +474,7 @@ Ready to secure your AI agent's identity? Visit [virtualsdns.fun](https://virtua
 - 📱 **Mobile App**: [Download from stores](https://virtualsdns.fun/mobile)
 - 🛒 **Marketplace**: [marketplace.virtualsdns.fun](https://marketplace.virtualsdns.fun)
 
+## Frontend Deployment Branch
+This branch is optimized for Vercel deployment.
+
 **© 2025 VirtualsBase. All rights reserved.**
